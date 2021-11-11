@@ -1,0 +1,33 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+djoser = "*"
+djangorestframework = "*"
+markdown = "*"
+django-filter = "*"
+coverage = "*"
+pyyaml = "*"
+uritemplate = "*"
+drf-yasg = "*"
+django-coverage = "*"
+django-autoslug = "*"
+pillow = "*"
+django-cors-headers = "*"
+djangorestframework-simplejwt = "*"
+django-resized = "*"
+django-storages = {extras = ["dropbox"], version = "*"}
+whitenoise = "*"
+dj-database-url = "*"
+gunicorn = "*"
+psycopg2-binary = "*"
+install = "*"
+environ = {extras = ["django"], version = "*"}
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
