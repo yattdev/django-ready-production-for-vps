@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.urls import path, include
-from .views import get_csrf_token
+from .views.utils_view import get_csrf_token
 
 urlpatterns = [
     path('get-token/', get_csrf_token, name="get-token"),  # to get csrf_token 
