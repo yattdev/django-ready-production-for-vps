@@ -54,4 +54,4 @@ class UserAccount(AbstractUser):
         ordering = ['-date_joined']
 
     def __str__(self):
-        return self.email.split('@')[0]
+        return self.username
