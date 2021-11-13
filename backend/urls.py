@@ -34,23 +34,24 @@ schemas_view = get_schema_view(
         license=openapi.License(name="BSD License"),
     ),
     public=True,
-    permission_classes=(permissions.AllowAny,),
+    permission_classes=(permissions.AllowAny, ),
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', RedirectView.as_view(url=reverse_lazy('openapi-schemas'))),
+    path('', include('blog.urls')),
     path('api/v1/', include('api.urls')),
     # swagger logout url
     path('accounts/logout/', RedirectView.as_view(url=reverse_lazy('logout'))),
     path('accounts/login/', RedirectView.as_view(url=reverse_lazy('login'))),
-
-    path('api/v1/docs', schemas_view.with_ui(
-        'swagger', cache_timeout=0
-    ), name="openapi-schemas")
+    path('api/v1/docs',
+         schemas_view.with_ui('swagger', cache_timeout=0),
+         name="openapi-schemas")
 ]
 
 # enables django to know location of static and media files
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

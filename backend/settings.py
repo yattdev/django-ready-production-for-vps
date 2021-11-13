@@ -40,6 +40,14 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 
+BLOG_APP_DEPS = [
+    'django_filters',
+    'taggit',
+    'ckeditor',
+    'ckeditor_uploader',
+    'crispy_forms',
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -59,7 +67,8 @@ INSTALLED_APPS = [
     # local
     'api',  # endpoint app
     'users',  # app to manage users
-]
+    'blog'
+] + BLOG_APP_DEPS
 
 AUTH_USER_MODEL = 'users.UserAccount'
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
@@ -148,13 +157,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
+
 STATIC_URL = '/static/'
 STATIC_ROOT = location('static')
 
 STATICFILES_DIRS = [
-    location("static/js/"),
-    location("static/css/"),
-    location("static/img/"),
+    location("users/static"),
+    location("api/static"),
 ]
 
 # MEDIA SETTINGS
@@ -276,3 +289,32 @@ DJANGORESIZED_DEFAULT_QUALITY = 75
 DJANGORESIZED_DEFAULT_KEEP_META = True
 DJANGORESIZED_DEFAULT_FORMAT_EXTENSIONS = {'JPEG': ".jpg", 'PNG': ".png"}
 DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True
+
+# CKEditor Settings
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'width': 'auto',
+        'extraPlugins': ','.join(['codesnippet', 'youtube']),
+    },
+}
+
+# Account Settings
+LOGIN_URL = '/account/login/'
+LOGIN_REDIRECT_URL = '/author/dashboard/'
+LOGOUT_REDIRECT_URL = '/account/logout/'
+
+# Email Settings (Development)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+if env('ENV') == 'PRODUCTION':
+    # Email Settings (Production)
+    EMAIL_BACKEND = ''
+    EMAIL_HOST = ''
+    EMAIL_HOST_USER = ''
+    EMAIL_HOST_PASSWORD = ""
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
