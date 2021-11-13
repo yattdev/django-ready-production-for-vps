@@ -9,7 +9,7 @@ from .views.category_views import CategoryViewSet
 from rest_framework.routers import SimpleRouter
 
 urlpatterns = [
-    path('get-token/', get_csrf_token, name="get-token"),  # to get csrf_token 
+    path('get-token/', get_csrf_token, name="get-token"),  # to get csrf_token
     # third party apps urls
     path("auth", include("rest_framework.urls")),
     path('auth', include('djoser.urls'), name="auth"),
