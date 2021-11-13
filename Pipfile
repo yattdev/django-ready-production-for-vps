@@ -26,6 +26,11 @@ gunicorn = "*"
 psycopg2-binary = "*"
 install = "*"
 environ = {extras = ["django"], version = "*"}
+django-taggit = "*"
+django-ckeditor = "*"
+django-tinymce4-lite = "*"
+six = "*"
+django-crispy-forms = "*"
 
 [dev-packages]
 
