@@ -51,6 +51,9 @@ urlpatterns = [
          schemas_view.with_ui('swagger', cache_timeout=0),
          name="openapi-schemas"),
 
+    # CKEditor path
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+
     # Url for password reset.
     path('account/password-reset/',
          auth_views.PasswordResetView.as_view(
