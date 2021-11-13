@@ -1,5 +1,5 @@
 # Core Django imports.
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.forms.models import model_to_dict
 from django.test import Client
 from django.test import TestCase
@@ -12,12 +12,14 @@ from model_mommy import mommy
 from blog.models.article_models import Article
 from blog.models.category_models import Category
 
+# Get Custom User as User
+User = get_user_model()
+
 
 class ArticleListViewTestCase(TestCase):
     """
     Class to test the list of all articles.
     """
-
     def setUp(self):
         """
         Set up all the tests using django client.
@@ -59,8 +61,7 @@ class ArticleListViewTestCase(TestCase):
 
     def test_if_article_list_view_returns_the_right_category_details(self):
         response = self.client.get('')
-        self.assertEqual(response.context_data['categories'][0],
-                         self.category)
+        self.assertEqual(response.context_data['categories'][0], self.category)
         self.assertEqual(response.context_data['categories'][0].name,
                          self.category.name)
         self.assertEqual(response.context_data['categories'][0].slug,
@@ -84,8 +85,7 @@ class ArticleListViewTestCase(TestCase):
         The list view orders articles according to the time they were published.
         """
         response = self.client.get('')
-        self.assertEqual(response.context_data['categories'][0],
-                         self.category)
+        self.assertEqual(response.context_data['categories'][0], self.category)
         self.assertEqual(response.context_data['categories'][0].name,
                          self.category.name)
         self.assertEqual(response.context_data['articles'][0].category,
@@ -126,16 +126,21 @@ class ArticleDetailViewTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_article_detail_view_url_by_name(self):
-        response = self.client.get(reverse('blog:article_detail',
-                                           kwargs={'slug': self.article.slug,
-                                                   'username': self.article.author.username.lower()
-                                                   }))
+        response = self.client.get(
+            reverse('blog:article_detail',
+                    kwargs={
+                        'slug': self.article.slug,
+                        'username': self.article.author.username.lower()
+                    }))
         self.assertEqual(response.status_code, 200)
 
     def test_if_categories_list_view_uses_correct_template(self):
-        response = self.client.get(reverse('blog:article_detail',
-                                           kwargs={'slug': self.article.slug,
-                                                   'username': self.article.author.username.lower()}))
+        response = self.client.get(
+            reverse('blog:article_detail',
+                    kwargs={
+                        'slug': self.article.slug,
+                        'username': self.article.author.username.lower()
+                    }))
         self.assertTemplateUsed(response, 'blog/article/article_detail.html')
 
     def test_if_article_detail_view_returns_the_right_article_details(self):
@@ -157,10 +162,12 @@ class ArticleDetailViewTestCase(TestCase):
 
 
 class ArticleSearchListViewTestCase(TestCase):
-
     def setUp(self):
         self.client = Client()
-        self.articles = mommy.make(Article, _quantity=5, body="Test", status='PUBLISHED')
+        self.articles = mommy.make(Article,
+                                   _quantity=5,
+                                   body="Test",
+                                   status='PUBLISHED')
 
     def test_article_search_list_view_status_code(self):
         response = self.client.get(reverse('blog:article_search_list_view'))
@@ -172,19 +179,23 @@ class ArticleSearchListViewTestCase(TestCase):
 
     def test_article_search_list_view_uses_correct_template(self):
         response = self.client.get(reverse('blog:article_search_list_view'))
-        self.assertTemplateUsed(response, 'blog/article/article_search_list.html')
+        self.assertTemplateUsed(response,
+                                'blog/article/article_search_list.html')
 
     def test_article_search_list_view_does_not_contain_incorrect_html(self):
         response = self.client.get(reverse('blog:article_search_list_view'))
-        self.assertNotContains(response, 'blog/article/categories_list_view.html')
+        self.assertNotContains(response,
+                               'blog/article/categories_list_view.html')
 
     def test_article_search_list_view_returns_the_right_query_results(self):
-        response = self.client.get(f"/article/search/?q={self.articles[0].title}")
+        response = self.client.get(
+            f"/article/search/?q={self.articles[0].title}")
         self.assertEqual(len(response.context['search_results']), 1)
         self.assertEqual(response.context['search_results'][0].slug,
                          self.articles[0].slug)
 
-    def test_article_search_list_view_returns_all_articles_if_nothing_is_typed_in_the_search_input(self):
+    def test_article_search_list_view_returns_all_articles_if_nothing_is_typed_in_the_search_input(
+            self):
         response = self.client.get(f"/article/search/?q=")
         self.assertEqual(len(response.context['search_results']), 0)
 
@@ -208,14 +219,16 @@ class ArticleCreateViewTestCase(TestCase):
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(reverse("blog:article_write"))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/account/login/?next=/me/article/write/")
+        self.assertRedirects(response,
+                             "/account/login/?next=/me/article/write/")
 
     def test_logged_in_uses_correct_template(self):
         self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
         response = self.client.get(reverse('blog:article_write'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(str(response.context['user']), 'testuser1')
-        self.assertTemplateUsed(response, "dashboard/author/article_create_form.html")
+        self.assertTemplateUsed(response,
+                                "dashboard/author/article_create_form.html")
 
     # def test_create_a_new_article_with_valid_data(self):
     #     """
@@ -327,7 +340,6 @@ class ArticleCreateViewTestCase(TestCase):
 #         self.assertEqual(response.status_code, 403)
 #         self.assertEqual(response.content, b'<h1>403 Forbidden</h1>')
 
-
 # class ArticleUpdateViewTest(TestCase):
 #     """
 #     Test to check if the article create view works as required.
@@ -390,7 +402,3 @@ class ArticleCreateViewTestCase(TestCase):
 #         self.assertEqual(response.status_code, 200)
 #         self.assertEqual(str(response.context['user']), 'testuser1')
 #         self.assertTemplateUsed(response, "article/article_create_form.html")
-
-
-
-

@@ -1,12 +1,14 @@
 # Core Django imports.
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from django.views.generic import (
-    ListView,
-)
+    ListView, )
 
 # Blog application imports.
 from blog.models.article_models import Article
+
+# Get Custom User as User
+User = get_user_model()
 
 
 class AuthorArticlesListView(ListView):
@@ -17,12 +19,17 @@ class AuthorArticlesListView(ListView):
 
     def get_queryset(self):
         author = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Article.objects.filter(author=author, status=Article.PUBLISHED, deleted=False)
+
+        return Article.objects.filter(author=author,
+                                      status=Article.PUBLISHED,
+                                      deleted=False)
 
     def get_context_data(self, **kwargs):
-        context = super(AuthorArticlesListView, self).get_context_data(**kwargs)
+        context = super(AuthorArticlesListView,
+                        self).get_context_data(**kwargs)
         author = get_object_or_404(User, username=self.kwargs.get('username'))
         context['author'] = author
+
         return context
 
 

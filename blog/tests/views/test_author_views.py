@@ -1,5 +1,5 @@
 # Core Django imports.
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.test import Client
 from django.test import TestCase
 from django.urls import reverse
@@ -11,12 +11,14 @@ from model_mommy import mommy
 from blog.models.article_models import Article
 from blog.models.author_models import Profile
 
+# Get Custom User as User
+User = get_user_model()
+
 
 class AuthorsListViewTestCase(TestCase):
     """
     Class to test the list of all authors
     """
-
     def setUp(self):
         """
          Set up all the test using django client
@@ -70,31 +72,27 @@ class AuthorArticlesListViewTestCase(TestCase):
     """
       Class to test a particular author's articles.
     """
-
     def setUp(self):
         """
         Setup all the tests using django client and model_mommy.
         """
         self.client = Client()
         self.author = mommy.make(User)
-        self.articles = mommy.make(Article, body="Test", author=self.author, _quantity=5)
+        self.articles = mommy.make(Article,
+                                   body="Test",
+                                   author=self.author,
+                                   _quantity=5)
 
     def test_author_article_list_view_url_by_name(self):
-        response = self.client.get(reverse('blog:author_articles',
-                                           kwargs={
-                                               'username':
-                                                   self.author.username}
-                                           )
-                                   )
+        response = self.client.get(
+            reverse('blog:author_articles',
+                    kwargs={'username': self.author.username}))
         self.assertEqual(response.status_code, 200)
 
     def test_if_author_article_list_view_uses_correct_template(self):
-        response = self.client.get(reverse('blog:author_articles',
-                                           kwargs={
-                                               'username':
-                                                   self.author.username}
-                                           )
-                                   )
+        response = self.client.get(
+            reverse('blog:author_articles',
+                    kwargs={'username': self.author.username}))
         self.assertTemplateUsed(response, 'blog/authors/author_articles.html')
 
     # def test_if_author_article_list_view_returns_the_right_author_details(self):

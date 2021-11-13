@@ -1,5 +1,5 @@
 # Core Django imports.
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.forms.models import model_to_dict
 from django.test import Client
 from django.test import TestCase
@@ -12,12 +12,14 @@ from model_mommy import mommy
 from blog.models.article_models import Article
 from blog.models.category_models import Category
 
+# Get Custom User as User
+User = get_user_model()
+
 
 class CategoriesListViewTestCase(TestCase):
     """
     Class to test the list of all categories
     """
-
     def setUp(self):
         """
         Set up all the tests using django client.
@@ -44,7 +46,8 @@ class CategoriesListViewTestCase(TestCase):
         response = self.client.get('')
         self.assertNotContains(response, "<title>BONA</title>")
 
-    def test_if_categories_list_view_returns_the_right_number_of_categories(self):
+    def test_if_categories_list_view_returns_the_right_number_of_categories(
+            self):
         response = self.client.get(reverse('blog:categories_list'))
         self.assertEqual(len(response.context_data['categories']), 5)
 
@@ -60,28 +63,34 @@ class CategoryArticlesListViewTestCase(TestCase):
     """
     Class to test a particular category's articles.
     """
-
     def setUp(self):
         """
         Set up all the tests using django client and model_mommy.
         """
         self.client = Client()
         self.category = mommy.make(Category)
-        self.articles = mommy.make(Article, body="Test", category=self.category, _quantity=5)
+        self.articles = mommy.make(Article,
+                                   body="Test",
+                                   category=self.category,
+                                   _quantity=5)
 
     def test_category_article_list_view_status_code(self):
         response = self.client.get(self.category.get_absolute_url())
         self.assertEqual(response.status_code, 200)
 
     def test_category_article_list_view_url_by_name(self):
-        response = self.client.get(reverse('blog:category_articles',
-                                           kwargs={'slug': self.category.slug}))
+        response = self.client.get(
+            reverse('blog:category_articles',
+                    kwargs={'slug': self.category.slug}))
         self.assertEqual(response.status_code, 200)
 
     def test_if_category_article_list_view_uses_correct_template(self):
-        response = self.client.get(reverse('blog:category_articles',
-                                           kwargs={'slug': self.category.slug}))
-        self.assertTemplateUsed(response, 'blog/category/category_articles.html')
+        response = self.client.get(
+            reverse('blog:category_articles',
+                    kwargs={'slug': self.category.slug}))
+        self.assertTemplateUsed(response,
+                                'blog/category/category_articles.html')
+
     #
     # def test_if_category_articles_list_view_returns_the_right_number_of_articles(self):
     #     response = self.client.get(reverse('blog:category_articles',
@@ -131,7 +140,6 @@ class CategoryArticlesListViewTestCase(TestCase):
     #                      self.articles[4].date_created)
     #     self.assertEqual(response.context_data['articles'][0].status,
     #                      self.articles[4].status)
-
 
 
 # class CategoryCreateViewTest(TestCase):

@@ -1,10 +1,13 @@
 # Core Django imports.
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 # Blog application imports.
 from .models.author_models import Profile
+
+# Get Custom User as User
+User = get_user_model()
 
 
 # Creates author profile immediately an account is created for her/him.
