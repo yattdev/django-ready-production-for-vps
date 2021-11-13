@@ -28,6 +28,6 @@ router.register('articles', ArticleViewSet, basename="articles")
 # Category List/Details endpoint by viewsets
 router.register('categories', CategoryViewSet, basename='categories')
 
-blog_urls = [
+urlpatterns += [
     path('<str:category_name>/', CategoryArticleList.as_view()),
-] + router.urls + urlpatterns
+] + router.urls
