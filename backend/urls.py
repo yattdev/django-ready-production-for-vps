@@ -43,8 +43,10 @@ urlpatterns = [
     path('', include('blog.urls')),
     path('api/v1/', include('api.urls')),
     # swagger logout url
-    path('accounts/logout/', RedirectView.as_view(url=reverse_lazy('logout'))),
-    path('accounts/login/', RedirectView.as_view(url=reverse_lazy('login'))),
+    path('accounts/logout/',
+         RedirectView.as_view(url=reverse_lazy('blog:logout'))),
+    path('accounts/login/',
+         RedirectView.as_view(url=reverse_lazy('blog:login'))),
     path('api/v1/docs',
          schemas_view.with_ui('swagger', cache_timeout=0),
          name="openapi-schemas"),
