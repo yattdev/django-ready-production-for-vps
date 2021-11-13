@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import environ
 from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -20,20 +21,22 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 location = lambda x: os.path.join(os.path.dirname(os.path.realpath(__file__)),
                                   '..', x)
 
+# Take environment variables from .env file
+environ.Env.read_env('.env')
+env = environ.Env()
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    'SECRET_KEY', 'fqBz9>xB:1\x0b:=e*S3&Df*rO#f=Ldu<x$0tXbnk]N9m,b7xgumQ')
-#  \r+([xuhJM\\$S]78]h|#8EeOD'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 
-if os.environ.get('ENV') == 'PRODUCTION':
+if env('ENV') == 'PRODUCTION':
     DEBUG = False
+    # SECURITY WARNING: keep the secret key used in production secret!
+    SECRET_KEY = env('SECRET_KEY')
 else:
     DEBUG = True
+    SECRET_KEY = 'fqBz9>xB:1\x0b:=e*S3&Df*rO#f=Ldu<x$0tXbnk]N9m,b7xgumQ'
 
 # ALLOWED_HOSTS
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
@@ -111,10 +114,10 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRES_DB'),
-        'USER': os.environ.get('POSTGRES_USER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': os.environ.get('POSTGRES_HOST'),
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('POSTGRES_HOST'),
         'PORT': 5432
     }
 }
@@ -176,7 +179,7 @@ MEDIA_ROOT = location('media/')
 
 # Static files css for production
 
-if os.environ.get('ENV') == 'PRODUCTION':
+if env('ENV') == 'PRODUCTION':
     """ Sometimes Django apps are deployed at a particular prefix
     (or “subdirectory”) on a domain e.g. http://example.com/my-app/ rather than
     just http://example.com. In this case you would normally use Django’s
@@ -192,7 +195,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
     # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
 
-    DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_OAUTH2_TOKEN')
+    DROPBOX_OAUTH2_TOKEN = env('DROPBOX_OAUTH2_TOKEN')
 
     MEDIA_URL = '/media/'
     MEDIA_ROOT = '/media'
@@ -267,7 +270,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://192.168.11.106:8080",
 ]
 
-if os.environ.get('ENV') != 'PRODUCTION':
+if env('ENV') != 'PRODUCTION':
     CORS_ALLOWED_ORIGINS.append("http://localhost:3000")
 
 # allows http verbs

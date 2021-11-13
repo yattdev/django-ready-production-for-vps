@@ -31,6 +31,7 @@ django-ckeditor = "*"
 django-tinymce4-lite = "*"
 six = "*"
 django-crispy-forms = "*"
+django-environ = "*"
 
 [dev-packages]
 
