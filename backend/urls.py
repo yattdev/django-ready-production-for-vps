@@ -23,6 +23,7 @@ from django.urls import reverse_lazy
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from drf_yasg import openapi
+from django.contrib.auth import views as auth_views
 
 schemas_view = get_schema_view(
     openapi.Info(
@@ -46,7 +47,31 @@ urlpatterns = [
     path('accounts/login/', RedirectView.as_view(url=reverse_lazy('login'))),
     path('api/v1/docs',
          schemas_view.with_ui('swagger', cache_timeout=0),
-         name="openapi-schemas")
+         name="openapi-schemas"),
+
+    # Url for password reset.
+    path('account/password-reset/',
+         auth_views.PasswordResetView.as_view(
+             template_name='account/password_reset.html'),
+         name='password_reset'),
+
+    # Url for successful password reset.
+    path('account/password-reset/done/',
+         auth_views.PasswordResetDoneView.as_view(
+             template_name='account/password_reset_done.html'),
+         name='password_reset_done'),
+
+    # Url for successful password reset confirm.
+    path('account/password-reset-confirm/<uidb64>/<token>/',
+         auth_views.PasswordResetConfirmView.as_view(
+             template_name='account/password_reset_confirm.html'),
+         name='password_reset_confirm'),
+
+    # Url for password reset done.
+    path('account/password-reset-complete/',
+         auth_views.PasswordResetCompleteView.as_view(
+             template_name='account/password_reset_complete.html'),
+         name='password_reset_complete'),
 ]
 
 # enables django to know location of static and media files
