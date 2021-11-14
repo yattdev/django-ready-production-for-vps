@@ -30,7 +30,7 @@ router.register('categories', CategoryViewSet, basename='categories')
 
 urlpatterns += [
     # Return all articles for given categorie(name and id)
-    path('categorie-articles/<int:category_id>/<str:category_name>/',
+    path('categorie-articles/<uuid:category_id>/<str:category_name>/',
          CategoryArticleList.as_view(),
          name="categorie-articles")
 ] + router.urls
