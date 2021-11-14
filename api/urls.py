@@ -14,7 +14,6 @@ urlpatterns = [
     path("auth", include("rest_framework.urls")),
     path('auth', include('djoser.urls'), name="auth"),
     path('auth', include('djoser.urls.jwt')),
-    path('auth', include('djoser.urls.authtoken'), name="auth_token"),
 ]
 
 # ---------------
