@@ -9,7 +9,7 @@ User = get_user_model()
 
 
 class Profile(models.Model):
-    uuid = models.UUIDField(
+    id = models.UUIDField(
         primary_key=True,
         editable=False,
         default=uuid.uuid4,
