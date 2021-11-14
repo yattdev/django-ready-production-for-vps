@@ -22,7 +22,7 @@ admin.site.register(Profile, ProfileAdmin)
 
 class CategoryAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'name', 'slug', 'image', 'approved')
+    list_display = ('name', 'slug', 'image', 'approved')
     list_filter = (
         'name',
         'approved',
@@ -40,8 +40,8 @@ admin.site.register(Category, CategoryAdmin)
 
 class ArticleAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'image', 'category', 'title', 'slug', 'author',
-                    'image_credit', 'date_published', 'status')
+    list_display = ('image_tag', 'id', 'category', 'title', 'author',
+                    'date_published', 'status')
     list_filter = (
         'status',
         'date_created',
@@ -50,7 +50,9 @@ class ArticleAdmin(admin.ModelAdmin):
     )
     search_fields = (
         'title',
-        'body',
+        'author',
+        'date_published',
+        'status',
     )
     prepopulated_fields = {'slug': ('title', )}
     raw_id_fields = ('author', )
