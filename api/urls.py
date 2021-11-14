@@ -29,6 +29,8 @@ router.register('articles', ArticleViewSet, basename="articles")
 router.register('categories', CategoryViewSet, basename='categories')
 
 urlpatterns += [
-    # Return all articles for given categories name
-    path('categories/<str:category_name>/', CategoryArticleList.as_view()),
+    # Return all articles for given categorie(name and id)
+    path('categorie-articles/<int:category_id>/<str:category_name>/',
+         CategoryArticleList.as_view(),
+         name="categorie-articles")
 ] + router.urls

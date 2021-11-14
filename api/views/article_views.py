@@ -16,8 +16,10 @@ class CategoryArticleList(ListAPIView):
     serializer_class = ArticleSerializer
 
     def get_queryset(self):
+        category_id = self.kwargs['category_id']
         category_name = self.kwargs['category_name']
         articles = Article.objects.filter(category__name=category_name,
+                                          category__id=category_id,
                                           status='PUBLISHED')
 
         return articles
