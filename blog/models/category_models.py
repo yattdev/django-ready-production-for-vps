@@ -1,5 +1,6 @@
 # Core Django imports.
 import uuid
+from django.utils.html import mark_safe
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
@@ -19,6 +20,12 @@ class Category(models.Model):
     approved = models.BooleanField(default=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
+
+    def image_tag(self):
+        return mark_safe('<img src="/media/%s" width="150" height="80" />' %
+                         (self.image))
+
+    image_tag.short_description = 'Image'
 
     class Meta:
         unique_together = ('name', )
