@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
 
@@ -39,6 +40,11 @@ class UserAccount(AbstractUser):
     """ DOCSTRING:
         define a custom user models
     """
+    id = models.UUIDField(
+        primary_key=True,
+        editable=False,
+        default=uuid.uuid4,
+    )
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=40,
                             choices=USER_ROLES,

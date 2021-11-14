@@ -41,7 +41,7 @@ admin.site.register(Category, CategoryAdmin)
 class ArticleAdmin(admin.ModelAdmin):
 
     list_display = ('id', 'image', 'category', 'title', 'slug', 'author',
-                    'image_credit', 'body', 'date_published', 'status')
+                    'image_credit', 'date_published', 'status')
     list_filter = (
         'status',
         'date_created',
