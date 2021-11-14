@@ -1,5 +1,4 @@
 # Core Django imports.
-import uuid
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
@@ -9,11 +8,6 @@ User = get_user_model()
 
 
 class Profile(models.Model):
-    id = models.UUIDField(
-        primary_key=True,
-        editable=False,
-        default=uuid.uuid4,
-    )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='profile-pic-default.jpg',
                               upload_to='profile_pics')
