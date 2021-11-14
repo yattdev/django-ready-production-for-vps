@@ -22,7 +22,7 @@ admin.site.register(Profile, ProfileAdmin)
 
 class CategoryAdmin(admin.ModelAdmin):
 
-    list_display = ('name', 'slug', 'image', 'approved')
+    list_display = ('image_tag', 'id', 'name', 'slug', 'approved')
     list_filter = (
         'name',
         'approved',
