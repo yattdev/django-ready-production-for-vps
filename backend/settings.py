@@ -295,7 +295,7 @@ DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True
 
 # CKEditor Settings
 CKEDITOR_BASEPATH = location("/static/ckeditor/ckeditor/")
-CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_UPLOAD_PATH = os.path.join(MEDIA_ROOT, 'upload/')
 CKEDITOR_IMAGE_BACKEND = "pillow"
 
 CKEDITOR_CONFIGS = {
