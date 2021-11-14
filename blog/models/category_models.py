@@ -1,4 +1,5 @@
 # Core Django imports.
+import uuid
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
@@ -6,6 +7,11 @@ from django.utils.text import slugify
 
 class Category(models.Model):
 
+    id = models.UUIDField(
+        primary_key=True,
+        editable=False,
+        default=uuid.uuid4,
+    )
     name = models.CharField(max_length=100, null=False, blank=False)
     slug = models.SlugField()
     image = models.ImageField(default='category-default.jpg',
@@ -15,7 +21,7 @@ class Category(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = ('name',)
+        unique_together = ('name', )
         verbose_name = 'category'
         verbose_name_plural = 'categories'
 
@@ -27,5 +33,4 @@ class Category(models.Model):
         super(Category, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('blog:category_articles',
-                       kwargs={'slug': self.slug})
+        return reverse('blog:category_articles', kwargs={'slug': self.slug})

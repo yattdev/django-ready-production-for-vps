@@ -1,4 +1,5 @@
 # Core Django imports.
+import uuid
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
@@ -18,6 +19,12 @@ User = get_user_model()
 
 
 class Article(models.Model):
+
+    id = models.UUIDField(
+        primary_key=True,
+        editable=False,
+        default=uuid.uuid4,
+    )
 
     # Article status constants
     DRAFTED = "DRAFTED"
