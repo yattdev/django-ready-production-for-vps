@@ -1,5 +1,6 @@
 # Core Django imports.
 import uuid
+from django.utils.html import mark_safe
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
@@ -62,6 +63,12 @@ class Article(models.Model):
     count_words = models.CharField(max_length=50, default=0)
     read_time = models.CharField(max_length=50, default=0)
     deleted = models.BooleanField(default=False)
+
+    def image_tag(self):
+        return mark_safe('<img src="/media/%s" width="150" height="80" />' %
+                         (self.image))
+
+    image_tag.short_description = 'Image'
 
     class Meta:
         unique_together = ("title", )
