@@ -14,9 +14,24 @@ from ckeditor_uploader.fields import RichTextUploadingField
 # Blog application imports.
 from blog.utils.blog_utils import count_words, read_time
 from blog.models.category_models import Category
+from django.utils.translation import ugettext_lazy as _
+
+from taggit.models import GenericUUIDTaggedItemBase, TaggedItemBase
 
 # Get Custom User as User
 User = get_user_model()
+
+
+# A snippet to allow taggableManager to use UUID field
+class UUIDTaggedItem(GenericUUIDTaggedItemBase, TaggedItemBase):
+    # If you only inherit GenericUUIDTaggedItemBase, you need to define
+    # a tag field. e.g.
+    # tag = models.ForeignKey(Tag, related_name="uuid_tagged_items",
+    #  on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = _("Tag")
+        verbose_name_plural = _("Tags")
 
 
 class Article(models.Model):
@@ -50,7 +65,7 @@ class Article(models.Model):
                               upload_to='article_pics')
     image_credit = models.CharField(max_length=250, null=True, blank=True)
     body = RichTextUploadingField(blank=True)
-    tags = TaggableManager(blank=True)
+    tags = TaggableManager(through=UUIDTaggedItem, blank=True)
     date_published = models.DateTimeField(null=True,
                                           blank=True,
                                           default=timezone.now)
