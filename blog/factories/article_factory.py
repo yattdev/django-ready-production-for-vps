@@ -6,7 +6,7 @@ import random
 from faker import Faker
 from blog.models.article_models import Article
 from .category_factory import CategoryFactory
-from .author_factory import AuthorFactory
+from users.factories import UserFactory
 from django.core.files.base import ContentFile
 
 # Creat object faker
@@ -22,7 +22,7 @@ class ArticleFactory(factory.django.DjangoModelFactory):
 
     category = factory.SubFactory(CategoryFactory)
     title = fake.name()
-    author = factory.SubFactory(AuthorFactory)
+    author = factory.SubFactory(UserFactory)
     image = factory.LazyAttribute(
             lambda _: ContentFile(
                 factory.django.ImageField()._make_data(
