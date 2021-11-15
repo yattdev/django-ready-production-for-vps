@@ -25,3 +25,8 @@ RUN pip install --user pipenv && pipenv install --system
 
 # Copy project, period dot (.) meant current dir
 COPY --chown=alassane:alassane . /home/alassane/yattblog/
+
+USER root
+RUN --chown=alassane:alassane /home/alassane/
+RUN --chown=alassane:alassane $HOME
+USER alassane
