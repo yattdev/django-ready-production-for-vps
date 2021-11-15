@@ -19,7 +19,7 @@ class AuthorFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Profile
         # Solution for unique contraint field
-        django_get_or_create('user',)
+        django_get_or_create = ('user',)
 
     user = factory.SubFactory(UserFactory)
     image = factory.LazyAttribute(

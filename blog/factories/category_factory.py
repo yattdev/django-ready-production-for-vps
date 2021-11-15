@@ -15,7 +15,7 @@ class CategoryFactory(factory.django.DjangoModelFactory):
     class Meta:
         model =  Category
         # Solution for unique contraint field
-        django_get_or_create('name',)
+        django_get_or_create = ('name',)
 
     name = fake.name()
     image = factory.LazyAttribute(
