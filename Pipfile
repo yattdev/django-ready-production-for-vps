@@ -32,6 +32,8 @@ django-tinymce4-lite = "*"
 six = "*"
 django-crispy-forms = "*"
 django-environ = "*"
+faker = "*"
+factory-boy = "*"
 
 [dev-packages]
 
