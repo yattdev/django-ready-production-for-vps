@@ -21,7 +21,7 @@ ENV PATH="/home/alassane/.local/bin:${PATH}"
 RUN pip install --upgrade pip
 
 # install dependencies
-RUN pip install pipenv && pipenv install --system
+RUN pip install --user pipenv && pipenv install --system
 
 # Copy project, period dot (.) meant current dir
 COPY --chown=alassane:alassane . /home/alassane/yattblog/
