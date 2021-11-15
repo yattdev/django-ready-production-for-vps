@@ -22,7 +22,7 @@ location = lambda x: os.path.join(os.path.dirname(os.path.realpath(__file__)),
                                   '..', x)
 
 # Take environment variables from .env file
-environ.Env.read_env('.env')
+environ.Env.read_env(location('venv_docker.env'))
 env = environ.Env()
 
 # Quick-start development settings - unsuitable for production
