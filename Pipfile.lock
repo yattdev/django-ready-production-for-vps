@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "438b2130cf89804b8dacaef5bded70eebccc1b21e812272f555c8630eeef53fa"
+            "sha256": "12d0fb6a1ce4b5225f52b2678867602730dda2cd3d16af731a0dfe35b06f5c9e"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -235,13 +235,6 @@
             "index": "pypi",
             "version": "==3.10.0"
         },
-        "django-coverage": {
-            "hashes": [
-                "sha256:eee56c1465b2ece0a066ea2514c50039462f8fe1ea58e59adc0dfda14b30628b"
-            ],
-            "index": "pypi",
-            "version": "==1.2.4"
-        },
         "django-crispy-forms": {
             "hashes": [
                 "sha256:4dc9e5263c91c5f51766806a050ca2ec5c349d34c5cd91fcca3a1a0363b5e29e",
@@ -354,18 +347,6 @@
             ],
             "version": "==11.23.0"
         },
-        "environ": {
-            "extras": [
-                "django"
-            ],
-            "hashes": [
-                "sha256:052ded34331655b9c7982abd5681a066b9aaf9adf33b3412c7e842ce959e40b0",
-                "sha256:4df7f1dfeb7d1c988d2e19a8bd5d547a526e0400aeb35adf732032472f35dcb0",
-                "sha256:9266e62dd8004f3bf181b24c97aa129844e7e7ec87bf3ed06ef3888293212011"
-            ],
-            "index": "pypi",
-            "version": "==1.0"
-        },
         "factory-boy": {
             "hashes": [
                 "sha256:a98d277b0c047c75eb6e4ab8508a7f81fb03d2cb21986f627913546ef7a2a55e",
@@ -405,14 +386,6 @@
             ],
             "markers": "python_version >= '3.5'",
             "version": "==0.5.1"
-        },
-        "install": {
-            "hashes": [
-                "sha256:1455304a2475b6753a9b0c28243ca7d8b7d71aeea1a88e6de94034fc57d765a0",
-                "sha256:dfec614e0cc90f00659067a078bc2ec032d9f0758f3df230c073eeaffd0cefa1"
-            ],
-            "index": "pypi",
-            "version": "==1.3.4"
         },
         "itypes": {
             "hashes": [
@@ -826,7 +799,7 @@
                 "sha256:4987c65554f7a2dbf30c18fd48778ef124af6fab771a377103da0585e2336ece",
                 "sha256:c4fdf4019605b6e5423637e01bc9fe4daef873709a7973e195ceba0a62bbc844"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_full_version < '4.0.0'",
             "version": "==1.26.7"
         },
         "whitenoise": {
