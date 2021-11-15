@@ -6,7 +6,7 @@ services:
         build: .
         command: python /home/alassane/yattblog/manage.py runserver 0.0.0.0:8000
         env_file:
-            - .env # content env variable for databases and django
+            - venv.env # content env variable for databases and django
         volumes:
             - yattblog_django_data:/home/alassane/yattblog/
         ports:
@@ -19,7 +19,7 @@ services:
         volumes:
             - yattblog_postgres_data:/var/lib/postgresql/data/
         env_file:
-            - .env # content env variable for databases and django
+            - venv.env # content env variable for databases and django
 
 volumes:
     yattblog_postgres_data:
