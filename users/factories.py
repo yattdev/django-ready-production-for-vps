@@ -16,7 +16,7 @@ class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = User
         # Solution for unique contraint field
-        django_get_or_create('email', 'username')
+        django_get_or_create = ('email', 'username')
 
     first_name = fake.first_name()
     last_name = fake.last_name()
@@ -31,7 +31,7 @@ class AdminFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = User
         # Solution for unique contraint field
-        django_get_or_create('email', 'username')
+        django_get_or_create = ('email', 'username')
 
     first_name = fake.first_name()
     last_name = fake.last_name()
