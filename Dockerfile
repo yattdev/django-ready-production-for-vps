@@ -27,6 +27,6 @@ RUN pip install --user pipenv && pipenv install --system
 COPY --chown=alassane:alassane . /home/alassane/yattblog/
 
 USER root
-RUN --chown=alassane:alassane /home/alassane/
-RUN --chown=alassane:alassane $HOME
+RUN chown alassane:alassane /home/alassane/
+RUN chown alassane:alassane /home/alassane/yattblog/
 USER alassane
