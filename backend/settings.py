@@ -22,7 +22,7 @@ location = lambda x: os.path.join(os.path.dirname(os.path.realpath(__file__)),
                                   '..', x)
 
 # Take environment variables from .env file
-environ.Env.read_env(location('venv_docker.env'))
+environ.Env.read_env(location('venv.env'))
 env = environ.Env()
 
 # Quick-start development settings - unsuitable for production
@@ -125,23 +125,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME':
-        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME':
-        'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME':
-        'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME':
-        'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+AUTH_PASSWORD_VALIDATORS = [ {
 ]
 
 # Internationalization
