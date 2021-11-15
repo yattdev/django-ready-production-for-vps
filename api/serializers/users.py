@@ -16,32 +16,39 @@ class UserCreateSerializer(UserCreateSerializer):
         fields = (
             'id',
             'email',
+            'username',
             'password',
         )
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
         user_token = RefreshToken.for_user(instance)
-        token = {'refresh': str(user_token), 'access': str(user_token.access_token)}
+        token = {
+            'refresh': str(user_token),
+            'access': str(user_token.access_token)
+        }
         data = {
             "success": "true",
             "data": token,
         }
+
         return data
+
 
 class UserSerializer(UserSerializer):
     """ Override user details serializers"""
     def create(self, validated_data):
         user = User(
-            email=validated_data['email'],
+            username=validated_data['username'],
             password=make_password(validated_data['password']),
         )
+
         return user.save()
 
     class Meta:
         model = User
         fields = (
             'id',
+            'username',
             'email',
         )
-
