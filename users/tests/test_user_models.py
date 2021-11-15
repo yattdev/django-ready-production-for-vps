@@ -1,6 +1,9 @@
-from django.test import TestCase
-from users.factories import UserFactory, AdminFactory
+import os
+
 from django.contrib.auth import get_user_model
+from django.test import TestCase
+
+from users.factories import AdminFactory, UserFactory
 
 # Get Custom User
 User = get_user_model()
