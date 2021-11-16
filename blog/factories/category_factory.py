@@ -13,16 +13,14 @@ fake = Faker()
 class CategoryFactory(factory.django.DjangoModelFactory):
     """Factory for category models"""
     class Meta:
-        model =  Category
+        model = Category
         # Solution for unique contraint field
-        django_get_or_create = ('name',)
+        django_get_or_create = ('name', )
 
     name = fake.name()
-    image = factory.LazyAttribute(
-            lambda _: ContentFile(
-                factory.django.ImageField()._make_data(
-                    {'width': 1024, 'height': 768}
-                ), 'category_image.jpg'
-            )
-        )
-    approved = True
+    image = factory.LazyAttribute(lambda _: ContentFile(
+        factory.django.ImageField()._make_data({
+            'width': 1024,
+            'height': 768
+        }), 'category_image.jpg'))
+    approved = False
