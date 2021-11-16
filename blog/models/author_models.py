@@ -16,7 +16,7 @@ class Profile(models.Model):
                                      default='slider-1.jpg',
                                      upload_to='banner')
     job_title = models.CharField(max_length=100)
-    bio = models.CharField(max_length=100,
+    bio = models.CharField(max_length=255,
                            help_text="Short Bio (eg. I love cats and games)")
 
     address = models.CharField(max_length=100, help_text="Enter Your Address")

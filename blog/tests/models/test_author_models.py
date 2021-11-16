@@ -30,15 +30,6 @@ class AuthorProfileTestCase(TestCase):
         profile_saved = Profile.objects.get(user=self.user_profile.user)
 
         # Test profile conents
-        print(f'{self.user_profile.profile_image}')
-        print(f'{profile_saved.profile_image}')
-        print(f'{settings.MEDIA_ROOT}')
-        #  self.assertTrue(
-        #  os.path.exists(f'{settings.MEDIA_ROOT}' +
-        #  f'{self.user_profile.image}'))
-        #  self.assertTrue(
-        #  os.path.exists(f'{settings.MEDIA_ROOT}' +
-        #  f'{self.user_profile.banner_image}'))
         self.assertEqual(f'{profile_saved.job_title}',
                          f'{self.user_profile.job_title}')
         self.assertEqual(f'{profile_saved.bio}', f'{self.user_profile.bio}')
@@ -47,6 +38,13 @@ class AuthorProfileTestCase(TestCase):
         self.assertEqual(f'{profile_saved.city}', f'{self.user_profile.city}')
         self.assertEqual(f'{profile_saved.zip_code}',
                          f'{self.user_profile.zip_code}')
+        #  TODO: ImageField doesn't saved, test fail with below code
+        self.assertTrue(
+            os.path.exists(f'{settings.MEDIA_ROOT}' +
+                           f'{self.user_profile.profile_image}'))
+        self.assertTrue(
+            os.path.exists(f'{settings.MEDIA_ROOT}' +
+                           f'{self.user_profile.banner_image}'))
 
     @classmethod
     def tearDownClass(cls):
