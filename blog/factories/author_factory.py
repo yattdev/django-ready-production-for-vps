@@ -19,28 +19,21 @@ class AuthorFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Profile
         # Solution for unique contraint field
-        django_get_or_create = ('user',)
+        django_get_or_create = ('user', )
 
     user = factory.SubFactory(UserFactory)
-    image = factory.LazyAttribute(
-            lambda _: ContentFile(
-                factory.django.ImageField()._make_data(
-                    {'width': 1024, 'height': 768}
-                ), 'profile_image.jpg'
-            )
-        )
-    banner_image = factory.LazyAttribute(
-            lambda _: ContentFile(
-                factory.django.ImageField()._make_data(
-                    {'width': 1024, 'height': 768}
-                ), 'banner_image.jpg'
-            )
-        )
     job_title = fake.profile()['job']
     bio = fake.paragraph()
     address = fake.profile()['address']
     city = fake.profile()['residence']
     zip_code = fake.building_number()
-
-
-
+    profile_image = factory.LazyAttribute(lambda _: ContentFile(
+        factory.django.ImageField()._make_data({
+            'width': 1024,
+            'height': 768
+        }), 'article_image.jpg'))
+    banner_image = factory.LazyAttribute(lambda _: ContentFile(
+        factory.django.ImageField()._make_data({
+            'width': 200,
+            'height': 200
+        }), 'banner_image.jpg'))
