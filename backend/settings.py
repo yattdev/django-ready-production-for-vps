@@ -21,8 +21,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 location = lambda x: os.path.join(os.path.dirname(os.path.realpath(__file__)),
                                   '..', x)
 
-# Take environment variables from .env file
-environ.Env.read_env(location('venv.env'))
+# Change POSTGRES_HOST value based if docker or not
+
+if os.environ.get('IS_DOCKER'):
+    # Take environment variables from docker_venv.env file
+    environ.Env.read_env(location('docker_venv.env'))
+else:
+    # Take environment variables from local_venv.env file
+    environ.Env.read_env(location('local_venv.env'))
+
 env = environ.Env()
 
 # Quick-start development settings - unsuitable for production
