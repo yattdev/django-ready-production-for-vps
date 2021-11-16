@@ -1,27 +1,53 @@
+import os
+import shutil
 # Core Django imports.
-from django.contrib.auth.models import User
-from django.test import TestCase
+from blog.models.author_models import Profile
+from django.test import TestCase, override_settings
+from django.conf import settings
 
-# Third-party Django app imports.
-from model_mommy import mommy
+from blog.factories.author_factory import AuthorFactory
 
 # Blog application imports.
 
 
+@override_settings(MEDIA_ROOT=os.path.join(settings.BASE_DIR,
+                                           'media_dir_for_test/'))
 class AuthorProfileTestCase(TestCase):
     """
       Class to test the AuthorProfile Model.
     """
-
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         """
-         Set up all the tests using model_mommy.
+         Set up all the tests using model AuthorFactory
         """
-        self.user = mommy.make(User)
+        cls.user_profile = AuthorFactory()
 
     def test_if_user_profile_returns_the_correct_username(self):
-        self.assertEqual(self.user.profile.__str__(),
-                         f"{self.user.username}'s Profile")
+        self.assertEqual(self.user_profile.__str__(),
+                         f"{self.user_profile.user.username}'s Profile")
 
-    def test_if_user_profile_returns_default_picture_if_user_does_not_upload_picture(self):
-        self.assertEqual(self.user.profile.image.name, "profile-pic-default.jpg")
+    def test_if_profile_contents_are_saved(self):
+        # Get saved profile
+        profile_saved = Profile.objects.get(user=self.user_profile.user)
+
+        # Test profile conents
+        self.assertTrue(
+            os.path.exists(f'{settings.MEDIA_ROOT}' +
+                           f'{profile_saved.image}'))
+        self.assertTrue(
+            os.path.exists(f'{settings.MEDIA_ROOT}' +
+                           f'{profile_saved.banner_image}'))
+        self.assertEqual(f'{profile_saved.job_title}',
+                         f'{self.user_profile.job_title}')
+        self.assertEqual(f'{profile_saved.bio}', f'{self.user_profile.bio}')
+        self.assertEqual(f'{profile_saved.address}',
+                         f'{self.user_profile.address}')
+        self.assertEqual(f'{profile_saved.city}', f'{self.user_profile.city}')
+        self.assertEqual(f'{profile_saved.zip_code}',
+                         f'{self.user_profile.zip_code}')
+
+    @classmethod
+    def tearDownClass(cls):
+        # Delete test media directory
+        shutil.rmtree(settings.MEDIA_ROOT)
