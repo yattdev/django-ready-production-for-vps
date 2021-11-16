@@ -4,6 +4,7 @@ FROM python:3.8
 # Set environment variable
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV IS_DOCKER 1
 
 # add new user
 RUN useradd -ms /bin/bash alassane
