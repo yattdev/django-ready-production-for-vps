@@ -12,7 +12,8 @@ from blog.factories.article_factory import ArticleFactory
 from blog.models.article_models import Article
 
 
-@override_settings(MEDIA_ROOT=os.path.join(settings.BASE_DIR, 'media_dir_for_test/'))
+@override_settings(MEDIA_ROOT=os.path.join(settings.BASE_DIR,
+                                           'media_dir_for_test/'))
 class ArticleTestCase(TestCase):
     """
       Class to test the article model.
@@ -31,9 +32,13 @@ class ArticleTestCase(TestCase):
         self.assertEqual(self.article.slug, slugify(self.article.title))
 
     def test_article_get_absolute_url(self):
-        self.assertEquals(self.article.get_absolute_url(),
-                          reverse('blog:article_detail', kwargs={'username': self.article.author.username.lower(),
-                                                                 'slug': self.article.slug}))
+        self.assertEquals(
+            self.article.get_absolute_url(),
+            reverse('blog:article_detail',
+                    kwargs={
+                        'username': self.article.author.username.lower(),
+                        'slug': self.article.slug
+                    }))
 
     def test_article_contents(self):
         # Get article saved
@@ -42,9 +47,10 @@ class ArticleTestCase(TestCase):
         self.assertEqual(article_saved.image_credit, self.article.image_credit)
         self.assertTrue(article_saved.tags)
         self.assertEqual(article_saved.status, self.article.status)
-        self.assertEqual(f'{article_saved.read_time}', f'{self.article.read_time}')
-        self.assertTrue(os.path.exists(f'{settings.MEDIA_ROOT}'+
-                                       f'{self.article.image}'))
+        self.assertEqual(f'{article_saved.read_time}',
+                         f'{self.article.read_time}')
+        self.assertTrue(
+            os.path.exists(f'{settings.MEDIA_ROOT}' + f'{self.article.image}'))
 
     @classmethod
     def tearDownClass(cls):
