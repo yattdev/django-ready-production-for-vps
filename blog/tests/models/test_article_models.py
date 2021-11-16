@@ -54,6 +54,7 @@ class ArticleTestCase(TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        media_root = settings.MEDIA_ROOT
-        # Remove test media root
-        shutil.rmtree(media_root)
+        # Delete test media directory
+
+        if os.path.exists(settings.MEDIA_ROOT):
+            shutil.rmtree(settings.MEDIA_ROOT)
