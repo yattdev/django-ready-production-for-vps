@@ -21,6 +21,11 @@ class ArticleFactory(factory.django.DjangoModelFactory):
 
     category = factory.SubFactory(CategoryFactory)
     title = fake.unique.name()
+    comments = factory.RelatedFactoryList(
+        'blog.factories.comment_factory.CommentFactory',
+        'article',
+        size=10,
+    )
     author = factory.SubFactory(UserFactory)
     image = factory.django.ImageField(width=1024,
                                       height=768,
