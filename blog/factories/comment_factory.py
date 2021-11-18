@@ -14,7 +14,7 @@ class CommentFactory(factory.django.DjangoModelFactory):
     """Factory class for blog:Comment models"""
     class Meta:
         model = Comment
-        django_get_or_create = ('article', )
+        django_get_or_create = ('comment', )
 
     name = fake.name()
     email = fake.email()
