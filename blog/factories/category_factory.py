@@ -17,10 +17,8 @@ class CategoryFactory(factory.django.DjangoModelFactory):
         # Solution for unique contraint field
         django_get_or_create = ('name', )
 
-    name = fake.name()
-    image = factory.LazyAttribute(lambda _: ContentFile(
-        factory.django.ImageField()._make_data({
-            'width': 1024,
-            'height': 768
-        }), 'category_image.jpg'))
+    name = fake.unique.name()
+    image = factory.django.ImageField(width=1024,
+                                      height=768,
+                                      filename='category_image.jpg')
     approved = False
