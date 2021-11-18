@@ -95,6 +95,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+if env('ENV') == 'PRODUCTION':
+    MIDDLEWARE += ['django_pdb.middleware.PdbMiddleware',]
+
 ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
