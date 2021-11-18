@@ -1,5 +1,6 @@
 import os
 import shutil
+
 # Core Django imports.
 from django.conf import settings
 from django.test import TestCase, override_settings
@@ -59,8 +60,8 @@ class CategoryTestCase(TestCase):
     @classmethod
     def tearDownClass(cls):
         # Delete test media directory
+
         if os.path.exists(settings.MEDIA_ROOT):
             shutil.rmtree(settings.MEDIA_ROOT)
 
         super().tearDownClass()
-

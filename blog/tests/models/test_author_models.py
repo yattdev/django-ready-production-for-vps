@@ -1,11 +1,12 @@
 import os
 import shutil
+
+from django.conf import settings
+from django.test import TestCase, override_settings
+
+from blog.factories.author_factory import AuthorFactory
 # Core Django imports.
 from blog.models.author_models import Profile
-from django.test import TestCase, override_settings
-from django.conf import settings
-from users.factories import UserFactory
-from blog.factories.author_factory import AuthorFactory
 
 
 @override_settings(MEDIA_ROOT=os.path.join(settings.BASE_DIR,
@@ -56,6 +57,7 @@ class AuthorProfileTestCase(TestCase):
     @classmethod
     def tearDownClass(cls):
         # Delete test media directory
+
         if os.path.exists(settings.MEDIA_ROOT):
             shutil.rmtree(settings.MEDIA_ROOT)
 

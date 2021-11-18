@@ -3,6 +3,7 @@
 
 import factory
 from faker import Faker
+
 from blog.models.author_models import Profile
 from users.factories import UserFactory
 

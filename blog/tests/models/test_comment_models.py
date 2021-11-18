@@ -5,9 +5,8 @@ import shutil
 from django.conf import settings
 from django.test import TestCase, override_settings
 
+# blog app modules
 from blog.factories.comment_factory import CommentFactory
-# Blog application imports.
-from blog.models import Article
 from blog.models.comment_models import Comment
 
 

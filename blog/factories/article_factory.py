@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import factory
 import random
+
+import factory
 from faker import Faker
+
 from blog.models.article_models import Article
-from .category_factory import CategoryFactory
 from users.factories import UserFactory
+
+from .category_factory import CategoryFactory
 
 # Creat object faker
 fake = Faker()

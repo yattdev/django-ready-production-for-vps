@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import factory
-from faker import Faker
-from blog.models.category_models import Category
 from django.core.files.base import ContentFile
+from faker import Faker
+
+from blog.models.category_models import Category
 
 # Create fake object
 fake = Faker()

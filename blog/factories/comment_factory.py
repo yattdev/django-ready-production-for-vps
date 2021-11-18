@@ -3,7 +3,9 @@
 
 import factory
 from faker import Faker
+
 from blog.models.comment_models import Comment
+
 from .article_factory import ArticleFactory
 
 # Creat fake object

@@ -1,8 +1,8 @@
 import os
 import shutil
+
 # Core Django imports.
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.utils.text import slugify
@@ -67,6 +67,7 @@ class ArticleTestCase(TestCase):
     @classmethod
     def tearDownClass(cls):
         # Delete test media directory
+
         if os.path.exists(settings.MEDIA_ROOT):
             shutil.rmtree(settings.MEDIA_ROOT)
 
