@@ -24,17 +24,22 @@ class CommentTestCase(TestCase):
         """
         cls.comment = CommentFactory()
 
+        # Get one comment from comment list
+        cls.comment_saved = Comment.objects.get()
+
     def test_if_comment_returns_the_right_user(self):
         self.assertEqual(
             self.comment.__str__(),
             f"Comment by {self.comment.name} on {self.comment.article}")
 
-    def test_comment_content(self):
-        comment_saved = Comment.objects.get(email=self.comment.email)
-        self.assertEqual(f'{comment_saved.comment}', f'{self.comment.comment}')
-        self.assertEqual(f'{comment_saved.article.title}',
-                         f'{self.comment.article.title}')
-        self.assertTrue(comment_saved.approved)
+    def test_if_comment_body_not_empty(self):
+        self.assertTrue(f'{self.comment_saved.comment}' != '')
+
+    def test_if_comment_title_not_empty(self):
+        self.assertTrue(f'{self.comment_saved.article.title}' != '')
+
+    def test_if_comment_approuve_correctly_saved(self):
+        self.assertTrue(self.comment_saved.approved)
 
     @classmethod
     def tearDownClass(cls):
