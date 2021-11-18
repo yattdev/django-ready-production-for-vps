@@ -13,7 +13,7 @@ from blog.models.article_models import Article
 
 
 @override_settings(MEDIA_ROOT=os.path.join(settings.BASE_DIR,
-                                           'media_dir_for_test/'))
+                                           'media_dir_for_test_article/'))
 class ArticleTestCase(TestCase):
     """
       Class to test the article model.

@@ -12,7 +12,7 @@ from blog.models.comment_models import Comment
 
 
 @override_settings(MEDIA_ROOT=os.path.join(settings.BASE_DIR,
-                                           'media_dir_for_test/'))
+                                           'media_dir_for_test_comment/'))
 class CommentTestCase(TestCase):
     """
       Class to test the Blog model.

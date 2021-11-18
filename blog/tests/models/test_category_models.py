@@ -12,7 +12,7 @@ from blog.models.category_models import Category
 
 
 @override_settings(MEDIA_ROOT=os.path.join(settings.BASE_DIR,
-                                           'media_dir_for_test/'))
+                                           'media_dir_for_test_category/'))
 class CategoryTestCase(TestCase):
     """
       Class to test the category model.
