@@ -69,3 +69,5 @@ class ArticleTestCase(TestCase):
         # Delete test media directory
         if os.path.exists(settings.MEDIA_ROOT):
             shutil.rmtree(settings.MEDIA_ROOT)
+
+        super().tearDownClass()
