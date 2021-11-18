@@ -18,5 +18,5 @@ class CommentFactory(factory.django.DjangoModelFactory):
 
     name = fake.name()
     email = fake.email()
-    comment = fake.text()
-    article = factory.SubFactory(ArticleFactory)
+    comment = fake.unique.text()
+    article = factory.SubFactory(ArticleFactory, comments=[])
