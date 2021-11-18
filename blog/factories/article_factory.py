@@ -31,7 +31,7 @@ class ArticleFactory(factory.django.DjangoModelFactory):
                                       height=768,
                                       filename='article_image.jpg')
     image_credit = fake.name()
-    body = fake.paragraph(nb_sentences=100)
+    body = fake.unique.paragraph(nb_sentences=100)
     tags = fake.name()
     status = 'Publish'
     read_time = random.randrange(6)
