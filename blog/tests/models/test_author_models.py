@@ -4,7 +4,7 @@ import shutil
 from blog.models.author_models import Profile
 from django.test import TestCase, override_settings
 from django.conf import settings
-
+from users.factories import UserFactory
 from blog.factories.author_factory import AuthorFactory
 
 
@@ -19,36 +19,42 @@ class AuthorProfileTestCase(TestCase):
         """
          Set up all the tests using model AuthorFactory
         """
-        cls.user_profile = AuthorFactory()
+        cls.new_profile = AuthorFactory()
+
+        # Get User from databases
+        cls.profile_from_db = Profile.objects.get()
 
     def test_if_user_profile_returns_the_correct_username(self):
-        self.assertEqual(self.user_profile.__str__(),
-                         f"{self.user_profile.user.username}'s Profile")
+        self.assertEqual(self.profile_from_db.__str__(),
+                         f"{self.profile_from_db.user.username}'s Profile")
 
-    def test_if_profile_contents_are_saved(self):
-        # Get saved profile
-        profile_saved = Profile.objects.get(user=self.user_profile.user)
+    def test_if_profile_job_title_saved(self):
+        self.assertTrue(self.profile_from_db.job_title)
 
-        # Test profile conents
-        self.assertEqual(f'{profile_saved.job_title}',
-                         f'{self.user_profile.job_title}')
-        self.assertEqual(f'{profile_saved.bio}', f'{self.user_profile.bio}')
-        self.assertEqual(f'{profile_saved.address}',
-                         f'{self.user_profile.address}')
-        self.assertEqual(f'{profile_saved.city}', f'{self.user_profile.city}')
-        self.assertEqual(f'{profile_saved.zip_code}',
-                         f'{self.user_profile.zip_code}')
-        #  TODO: ImageField doesn't saved, test fail with below code
+    def test_if_profile_bio_saved(self):
+        self.assertTrue(self.profile_from_db.bio)
+
+    def test_if_profile_address_saved(self):
+        self.assertTrue(self.profile_from_db.address)
+
+    def test_if_profile_city_saved(self):
+        self.assertTrue(self.profile_from_db.city)
+
+    def test_if_profile_zip_code_saved(self):
+        self.assertTrue(self.profile_from_db.zip_code)
+
+    def test_if_profile_image_saved(self):
         self.assertTrue(
             os.path.exists(f'{settings.MEDIA_ROOT}' +
-                           f'{self.user_profile.profile_image}'))
+                           f'{self.profile_from_db.profile_image}'))
+
+    def test_if_profile_banner_image_saved(self):
         self.assertTrue(
             os.path.exists(f'{settings.MEDIA_ROOT}' +
-                           f'{self.user_profile.banner_image}'))
+                           f'{self.profile_from_db.banner_image}'))
 
     @classmethod
     def tearDownClass(cls):
         # Delete test media directory
-
         if os.path.exists(settings.MEDIA_ROOT):
             shutil.rmtree(settings.MEDIA_ROOT)
