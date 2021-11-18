@@ -20,7 +20,7 @@ class ArticleFactory(factory.django.DjangoModelFactory):
         django_get_or_create = ('category', )
 
     category = factory.SubFactory(CategoryFactory)
-    title = fake.name()
+    title = fake.unique.name()
     author = factory.SubFactory(UserFactory)
     image = factory.django.ImageField(width=1024,
                                       height=768,
