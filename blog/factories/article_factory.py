@@ -17,7 +17,7 @@ class ArticleFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Article
         # Solution for unique contraint field
-        django_get_or_create = ('author', 'title')
+        django_get_or_create = ('category', )
 
     category = factory.SubFactory(CategoryFactory)
     title = fake.name()
