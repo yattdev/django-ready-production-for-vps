@@ -20,10 +20,10 @@ class ArticleFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Article
         # Solution for unique contraint field
-        django_get_or_create = ('category', )
+        django_get_or_create = ('title', )
 
     category = factory.SubFactory(CategoryFactory)
-    title = fake.unique.name()
+    title = factory.LazyFunction(fake.unique.name)
     comments = factory.RelatedFactoryList(
         'blog.factories.comment_factory.CommentFactory',
         'article',
@@ -33,7 +33,7 @@ class ArticleFactory(factory.django.DjangoModelFactory):
     image = factory.django.ImageField(width=1024,
                                       height=768,
                                       filename='article_image.jpg')
-    image_credit = fake.name()
+    image_credit = factory.LazyFunction(fake.unique.name)
     body = fake.unique.paragraph(nb_sentences=100)
     tags = fake.name()
     status = 'Publish'
