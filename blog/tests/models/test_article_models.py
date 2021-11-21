@@ -64,6 +64,19 @@ class ArticleTestCase(TestCase):
         self.assertTrue(
             os.path.exists(f'{settings.MEDIA_ROOT}' + f'{self.article.image}'))
 
+    def test_if_correct_length_published_articles(self):
+        ArticleFactory.create_batch(10, status='PUBLISHED')
+        # Get articles from databases
+        # egal 11, because 10 created here + one inside setUpTestData
+        self.assertTrue(
+            Article.objects.filter(status='PUBLISHED').count() == 11)
+
+    def test_if_correct_length_drafted_articles(self):
+        ArticleFactory.create_batch(10, status='DRAFTED')
+
+        # Get articles from databases
+        self.assertTrue(Article.objects.filter(status='DRAFTED').count() == 10)
+
     @classmethod
     def tearDownClass(cls):
         # Delete test media directory
