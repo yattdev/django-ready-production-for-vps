@@ -36,5 +36,5 @@ class ArticleFactory(factory.django.DjangoModelFactory):
     image_credit = factory.LazyFunction(fake.unique.name)
     body = fake.unique.paragraph(nb_sentences=100)
     tags = fake.name()
-    status = 'Publish'
+    status = 'PUBLISHED'
     read_time = random.randrange(6)
