@@ -18,7 +18,7 @@ class CommentFactory(factory.django.DjangoModelFactory):
         model = Comment
         django_get_or_create = ('comment', )
 
-    name = fake.name()
-    email = fake.email()
-    comment = fake.unique.text()
+    name = factory.LazyFunction(fake.unique.name)
+    email = factory.LazyFunction(fake.email)
+    comment = factory.LazyFunction(fake.unique.text)
     article = factory.SubFactory(ArticleFactory, comments=[])
