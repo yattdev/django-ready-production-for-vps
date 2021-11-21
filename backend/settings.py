@@ -246,6 +246,8 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_RENDERER_CLASSES':
     DEFAULT_RENDERER_CLASSES,
+    'TEST_REQUEST_DEFAULT_FORMAT':
+    'json',
 }
 
 # Configuration for dj_rest_auth
