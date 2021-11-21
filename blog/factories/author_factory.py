@@ -11,6 +11,11 @@ from users.factories import UserFactory
 fake = Faker()
 
 
+# Return value of given field from person profile
+def profile_detail(field):
+    return fake.profile()[field]
+
+
 class AuthorFactory(factory.django.DjangoModelFactory):
     """
         Factory for blog:Profile models
@@ -22,11 +27,11 @@ class AuthorFactory(factory.django.DjangoModelFactory):
         django_get_or_create = ('user', )
 
     user = factory.SubFactory(UserFactory)
-    job_title = fake.profile()['job']
-    bio = fake.paragraph()
-    address = fake.profile()['address']
-    city = fake.profile()['residence']
-    zip_code = fake.building_number()
+    job_title = factory.LazyAttribute(lambda x: fake.profile()['job'])
+    bio = factory.LazyFunction(fake.paragraph)
+    address = factory.LazyAttribute(lambda x: fake.profile()['address'])
+    city = factory.LazyAttribute(lambda x: fake.profile()['residence'])
+    zip_code = factory.LazyFunction(fake.building_number)
     profile_image = factory.django.ImageField(width=400,
                                               height=200,
                                               filename='photo_de_profile.jpg')
