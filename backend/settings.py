@@ -96,7 +96,9 @@ MIDDLEWARE = [
 ]
 
 if env('ENV') == 'PRODUCTION':
-    MIDDLEWARE += ['django_pdb.middleware.PdbMiddleware',]
+    MIDDLEWARE += [
+        'django_pdb.middleware.PdbMiddleware',
+    ]
 
 ROOT_URLCONF = 'backend.urls'
 
