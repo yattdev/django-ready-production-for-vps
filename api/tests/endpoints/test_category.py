@@ -16,7 +16,7 @@ class CategoryEndpointTestCase(APITestCase):
     def setUpTestData(cls):
         # Create a bunch of categories
         cls.categories = CategoryFactory.create_batch(random.randrange(7, 15))
-        cls.tenth_categorie_id = cls.categories[10].id
+        cls.tenth_categorie_id = cls.categories[7].id
 
     def test_categories_list_endp(self):
         response = self.client.get(reverse_lazy('categories-list'))
