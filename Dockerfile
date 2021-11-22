@@ -7,8 +7,9 @@ ENV PYTHONUNBUFFERED 1
 ENV IS_DOCKER 1
 
 # install psycopg2 dependencies
+
 RUN apt-get update \
-    &&  apt-get install postgresql-dev gcc python3-dev musl-dev
+    &&  postgresql postgresql-contrib gcc python3-dev musl-dev
 
 # add new user
 RUN useradd -ms /bin/bash alassane
