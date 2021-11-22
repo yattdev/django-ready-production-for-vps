@@ -25,10 +25,10 @@ location = lambda x: os.path.join(os.path.dirname(os.path.realpath(__file__)),
 
 if os.environ.get('IS_DOCKER'):
     # Take environment variables from docker_venv.env file
-    environ.Env.read_env(location('docker_venv.env'))
+    environ.Env.read_env(location('.docker_venv.env'))
 else:
     # Take environment variables from local_venv.env file
-    environ.Env.read_env(location('local_venv.env'))
+    environ.Env.read_env(location('.local_venv.env'))
 
 env = environ.Env()
 
