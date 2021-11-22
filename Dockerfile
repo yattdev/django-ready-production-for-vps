@@ -6,6 +6,10 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV IS_DOCKER 1
 
+# Install netcat
+RUN apt-get update && \
+        apt-get install netcat -y
+
 # add new user
 RUN useradd -ms /bin/bash alassane
 USER alassane
@@ -33,6 +37,6 @@ RUN chown alassane:alassane /home/alassane/yattblog/
 USER alassane
 
 # run entrypoint.sh
-# RUN sed -i 's/\r$//g' /home/alassane/yattblog/utils-shortcuts/entrypoint.sh
-# RUN chmod +x /home/alassane/yattblog/utils-shortcuts/entrypoint.sh
-# ENTRYPOINT ["/home/alassane/yattblog/utils-shortcuts/entrypoint.sh"]
+RUN sed -i 's/\r$//g' /home/alassane/yattblog/utils-shortcuts/entrypoint.sh
+RUN chmod +x /home/alassane/yattblog/utils-shortcuts/entrypoint.sh
+ENTRYPOINT ["/home/alassane/yattblog/utils-shortcuts/entrypoint.sh"]
