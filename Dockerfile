@@ -27,6 +27,11 @@ RUN pip install --user pipenv && pipenv install --system
 # Copy project, period dot (.) meant current dir
 COPY --chown=alassane:alassane . /home/alassane/yattblog/
 
+# run entrypoint.sh
+RUN sed -i 's/\r$//g' /home/alassane/yattblog/utils-shortcuts/entrypoint.sh
+RUN chmod +x /home/alassane/yattblog/utils-shortcuts/entrypoint.sh
+ENTRYPOINT ["/home/alassane/yattblog/utils-shortcuts/entrypoint.sh"]
+
 USER root
 RUN chown alassane:alassane /home/alassane/
 RUN chown alassane:alassane /home/alassane/yattblog/
