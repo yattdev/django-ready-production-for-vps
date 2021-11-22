@@ -45,8 +45,10 @@ else:
     DEBUG = True
     SECRET_KEY = 'fqBz9>xB:1\x0b:=e*S3&Df*rO#f=Ldu<x$0tXbnk]N9m,b7xgumQ'
 
-# ALLOWED_HOSTS
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+# 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with
+# a space between each.
+# For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
+ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS").split(" ")
 
 # Application definition
 
