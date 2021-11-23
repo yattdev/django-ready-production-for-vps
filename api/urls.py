@@ -10,7 +10,7 @@ from rest_framework.routers import SimpleRouter
 
 urlpatterns = [
     path('get-token/', get_csrf_token, name="get-token"),  # to get csrf_token
-    # third party apps urls
+    # third party apps urls for auth
     path("auth", include("rest_framework.urls")),
     path('auth', include('djoser.urls'), name="auth"),
     path('auth', include('djoser.urls.jwt')),
