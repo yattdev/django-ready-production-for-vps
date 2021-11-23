@@ -20,9 +20,16 @@ services:
             - yattblog_postgres:/var/lib/postgresql/data/
         env_file:
             - ./.env.prod.env # content env variable for databases and django
+    nginx:
+      build: ./nginx
+      ports:
+        - 1337:80
+      depends_on:
+        - web
     cache:
       environment:
         TTL: '500'
+
 
 volumes:
     yattblog_postgres:
