@@ -202,7 +202,11 @@ if os.environ.get('ENV') == 'PRODUCTION':
     STATIC_URL = '/static/'
     STATIC_ROOT = location('staticfiles')
 
-    STATICFILES_DIRS = (location('static'), )
+    STATICFILES_DIRS = [
+        location("users/static"),
+        location("api/static"),
+        location("blog/static"),
+    ]
     # """ DROPBOX CONFIGURATION """
     # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
