@@ -11,15 +11,19 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-import environ
 from datetime import timedelta
+
+import environ
+from corsheaders.defaults import default_headers, default_methods
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+
 # Path helper
-location = lambda x: os.path.join(os.path.dirname(os.path.realpath(__file__)),
-                                  '..', x)
+def location(x):
+    return os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', x)
+
 
 if os.environ.get('ENV') != 'PRODUCTION' and not os.environ.get('IS_DOCKER'):
     # Take environment variables from local_venv.env file
@@ -83,7 +87,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',  # 3rd
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # 3rd
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -136,7 +139,8 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
-        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'django.contrib.auth.password_validation.\
+        UserAttributeSimilarityValidator',
     },
     {
         'NAME':
@@ -211,9 +215,6 @@ if os.environ.get('ENV') == 'PRODUCTION':
     ADMIN_MEDIA_PREFIX = 'media'
     # "************ END DROPBOX CONFIGURATION ************"
 
-    #  STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    # whitenoise.storage.CompressedManifestStaticFilesStorage
     import dj_database_url
 
     db_from_env = dj_database_url.config(conn_max_age=500)
@@ -284,13 +285,10 @@ if os.environ.get('ENV') != 'PRODUCTION':
     CORS_ALLOWED_ORIGINS.append("http://localhost:3000")
 
 # allows http verbs
-from corsheaders.defaults import default_methods
 
 CORS_ALLOW_METHODS = list(default_methods) + [
     #  "POKE",
 ]
-
-from corsheaders.defaults import default_headers
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
     #  "my-custom-header",
