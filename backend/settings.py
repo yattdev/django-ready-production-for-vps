@@ -72,7 +72,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'drf_yasg',
-    'storages',
 
     # local
     'api',  # endpoint app
@@ -207,11 +206,6 @@ if os.environ.get('ENV') == 'PRODUCTION':
         location("api/static"),
         location("blog/static"),
     ]
-    # """ DROPBOX CONFIGURATION """
-    # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
-
-    DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_OAUTH2_TOKEN')
 
     MEDIA_URL = '/media/'
     MEDIA_ROOT = '/media'
