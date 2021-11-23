@@ -94,7 +94,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-if os.environ.get('ENV') == 'PRODUCTION':
+if os.environ.get('ENV') != 'PRODUCTION':
     MIDDLEWARE += [
         'django_pdb.middleware.PdbMiddleware',
     ]
