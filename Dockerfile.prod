@@ -2,7 +2,7 @@
 # BUILDER #
 ###########
 # pull official base image
-FROM python:3.8.10-alpine as builder
+FROM python:3.8-slim-buster as builder
 
 WORKDIR /usr/src/app
 
@@ -12,15 +12,11 @@ ENV PYTHONUNBUFFERED 1
 ENV IS_DOCKER 1
 
 # install psycopg2 dependencies
-RUN apk update \
-    && apk add postgresql-dev gcc python3-dev musl-dev
-
-RUN apk update && \
-    apk add gcc python3-dev musl-dev && \
-    apk add postgresql && \
-    apk add postgresql-dev && \
-    apk add jpeg-dev zlib-dev libjpeg && \
-    apk add libffi-dev
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends gcc libc-dev python3-dev && \
+    apt-get install -y postgresql && \
+    # apt-get install -y jpeg-dev zlib-dev libjpeg && \
+    apt-get install -y libffi-dev
 
 
 # lint
@@ -34,8 +30,10 @@ COPY . .
 # Check code with flake8
 # RUN flake8 --ignore=E501,F401 .
 
-# Generate requirements.txt
-RUN pipenv lock -r > requirements.txt
+# Clean Pipfile.lock and generate requirements.txt
+RUN pipenv clean && \
+        pipenv lock -r > requirements.txt && \
+        pipenv --rm
 COPY ./requirements.txt .
 
 # Uninstall pipenv
@@ -49,44 +47,43 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requir
 # FINAL #
 #########
 # Pull base image
-FROM python:3.8.10-alpine
+FROM python:3.8-slim-buster
 
 ENV IS_DOCKER 1
-#
-# create directory for the app user
-RUN mkdir -p /home/alassane
 
 # add new user
-RUN addgroup -S alassane && adduser --home /home/alassane -S alassane -G alassane
+RUN useradd -ms /bin/bash alassane
 
 # Set work directory
-# create the appropriate directories
 ENV HOME=/home/alassane
-ENV APP_HOME=/home/alassane/yattblog
+ENV APP_HOME=/home/alassane/yattblog/
 WORKDIR $APP_HOME
 
 # Add path
 ENV PATH="$APP_HOME/.local/bin:${PATH}"
 
 # install dependencies
-RUN apk update && apk add libpq
 COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --no-cache /wheels/*
 
-# copy entrypoint.prod.sh
-COPY ./utils-shortcuts/entrypoint.prod.sh .
-RUN sed -i 's/\r$//g' $APP_HOME/utils-shortcuts/entrypoint.prod.sh
-RUN chmod +x $APP_HOME/utils-shortcuts/entrypoint.prod.sh
+# Install netcut
+RUN apt-get update && apt-get install netcat -y
 
 # Copy project, period dot (.) meant current dir
-COPY . $APP_HOME
+COPY --chown=alassane:alassane . $APP_HOME
 
-RUN chown -R alassane:alassane $HOME
-RUN chown -R alassane:alassane $APP_HOME
+# ENTRYPOINT POINT
+RUN sed -i 's/\r$//g' $APP_HOME/utils_shortcuts/entrypoint.prod.sh
+RUN chmod +x $APP_HOME/utils_shortcuts/entrypoint.prod.sh
 
-# change user
+# change user to root to change dirs and files owner
+USER root
+RUN chown alassane:alassane $HOME
+RUN chown alassane:alassane $APP_HOME
+
+# Change user to alassane
 USER alassane
 
 # run entrypoint.prod.sh
-ENTRYPOINT ["/home/alassane/yattblog/utils-shortcuts/entrypoint.prod.sh"]
+ENTRYPOINT ["/home/alassane/yattblog/utils_shortcuts/entrypoint.prod.sh"]
