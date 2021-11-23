@@ -56,8 +56,7 @@ RUN useradd -ms /bin/bash alassane
 
 # Set work directory
 ENV HOME=/home/alassane
-ENV APP_HOME=/home/alassane/yattblog/
-RUN mkdir $APP_HOME/staticfiles
+ENV APP_HOME=/home/alassane/yattblog
 WORKDIR $APP_HOME
 
 # Add path
@@ -73,6 +72,7 @@ RUN apt-get update && apt-get install netcat -y
 
 # Copy project, period dot (.) meant current dir
 COPY --chown=alassane:alassane . $APP_HOME
+RUN mkdir $APP_HOME/staticfiles
 
 # ENTRYPOINT POINT
 RUN sed -i 's/\r$//g' $APP_HOME/utils_shortcuts/entrypoint.prod.sh
@@ -80,8 +80,8 @@ RUN chmod +x $APP_HOME/utils_shortcuts/entrypoint.prod.sh
 
 # change user to root to change dirs and files owner
 USER root
-RUN chown alassane:alassane $HOME
-RUN chown alassane:alassane $APP_HOME
+RUN chown -R alassane:alassane $HOME
+RUN chown -R alassane:alassane $APP_HOME
 
 # Change user to alassane
 USER alassane
