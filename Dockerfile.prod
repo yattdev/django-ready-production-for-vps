@@ -66,6 +66,7 @@ ENV PATH="$APP_HOME/.local/bin:${PATH}"
 COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --no-cache /wheels/*
+RUN rm -rf /wheels && rm -rf /usr/src/app
 
 # Install netcut
 RUN apt-get update && apt-get install netcat -y
@@ -83,11 +84,11 @@ USER root
 RUN chown -R alassane:alassane $HOME
 RUN chown -R alassane:alassane $APP_HOME
 
+# Change user to clean up APT when done.
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 # Change user to alassane
 USER alassane
 
 # run entrypoint.prod.sh
 ENTRYPOINT ["/home/alassane/yattblog/utils_shortcuts/entrypoint.prod.sh"]
-
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
