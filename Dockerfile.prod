@@ -1,45 +1,92 @@
-# Pull base image
-FROM python:3.8 as builder
+###########
+# BUILDER #
+###########
+# pull official base image
+FROM python:3.8.10-alpine as builder
+
+WORKDIR /usr/src/app
 
 # Set environment variable
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV IS_DOCKER 1
 
-# Install netcat
-RUN apt-get update && \
-        apt-get install netcat -y
+# install psycopg2 dependencies
+RUN apk update \
+    && apk add postgresql-dev gcc python3-dev musl-dev
 
-# add new user
-RUN useradd -ms /bin/bash alassane
-USER alassane
+RUN apk update && \
+    apk add gcc python3-dev musl-dev && \
+    apk add postgresql && \
+    apk add postgresql-dev && \
+    apk add jpeg-dev zlib-dev libjpeg && \
+    apk add libffi-dev
 
-# Set work directory
-WORKDIR /home/alassane/yattblog/
 
-# Copy pipfile and change ower from host alassane to vm alassane
-COPY --chown=alassane:alassane Pipfile Pipfile.lock /home/alassane/yattblog/
+# lint
+RUN python3 -m pip install --upgrade pip setuptools wheel
+# Install pipenv to generate requirements.txt
+RUN pip install pipenv --no-cache-dir
+# RUN pip install flake8==3.9.2
 
-ENV PATH="/home/alassane/.local/bin:${PATH}"
+# copy dir
+COPY . .
+# Check code with flake8
+# RUN flake8 --ignore=E501,F401 .
 
-# Update pip
-RUN pip install --upgrade pip
+# Generate requirements.txt
+RUN pipenv lock -r > requirements.txt
+COPY ./requirements.txt .
+
+# Uninstall pipenv
+RUN pipenv --clear && \
+        pip uninstall -y pipenv virtualenv-clone virtualenv
 
 # install dependencies
-RUN pip install --user pipenv && pipenv install --system
-RUN pipenv install flake8==3.9.2
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
+
+#########
+# FINAL #
+#########
+# Pull base image
+FROM python:3.8.10-alpine
+
+ENV IS_DOCKER 1
+#
+# create directory for the app user
+RUN mkdir -p /home/alassane
+
+# add new user
+RUN addgroup -S alassane && adduser --home /home/alassane -S alassane -G alassane
+
+# Set work directory
+# create the appropriate directories
+ENV HOME=/home/alassane
+ENV APP_HOME=/home/alassane/yattblog
+WORKDIR $APP_HOME
+
+# Add path
+ENV PATH="$APP_HOME/.local/bin:${PATH}"
+
+# install dependencies
+RUN apk update && apk add libpq
+COPY --from=builder /usr/src/app/wheels /wheels
+COPY --from=builder /usr/src/app/requirements.txt .
+RUN pip install --no-cache /wheels/*
+
+# copy entrypoint.prod.sh
+COPY ./utils-shortcuts/entrypoint.prod.sh .
+RUN sed -i 's/\r$//g' $APP_HOME/utils-shortcuts/entrypoint.prod.sh
+RUN chmod +x $APP_HOME/utils-shortcuts/entrypoint.prod.sh
+
 # Copy project, period dot (.) meant current dir
-COPY --chown=alassane:alassane . /home/alassane/yattblog/
+COPY . $APP_HOME
 
-# Lint
-RUN flake8 --ignore=E501,F401 .
+RUN chown -R alassane:alassane $HOME
+RUN chown -R alassane:alassane $APP_HOME
 
-USER root
-RUN chown alassane:alassane /home/alassane/
-RUN chown alassane:alassane /home/alassane/yattblog/
+# change user
 USER alassane
 
-# run entrypoint.sh
-RUN sed -i 's/\r$//g' /home/alassane/yattblog/utils-shortcuts/entrypoint.sh
-RUN chmod +x /home/alassane/yattblog/utils-shortcuts/entrypoint.sh
-ENTRYPOINT ["/home/alassane/yattblog/utils-shortcuts/entrypoint.sh"]
+# run entrypoint.prod.sh
+ENTRYPOINT ["/home/alassane/yattblog/utils-shortcuts/entrypoint.prod.sh"]
