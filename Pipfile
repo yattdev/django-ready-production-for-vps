@@ -22,7 +22,6 @@ django-storages = {extras = ["dropbox"], version = "*"}
 whitenoise = "*"
 dj-database-url = "*"
 gunicorn = "*"
-psycopg2-binary = "*"
 django-taggit = "*"
 django-ckeditor = "*"
 django-tinymce4-lite = "*"
@@ -32,6 +31,8 @@ faker = "*"
 factory-boy = "*"
 django-environ = "*"
 django-pdb = "*"
+psycopg2-binary = "*"
+setuptools = "*"
 
 [dev-packages]
 
