@@ -57,6 +57,7 @@ RUN useradd -ms /bin/bash alassane
 # Set work directory
 ENV HOME=/home/alassane
 ENV APP_HOME=/home/alassane/yattblog/
+RUN mkdir $APP_HOME/staticfiles
 WORKDIR $APP_HOME
 
 # Add path
