@@ -273,14 +273,15 @@ DJOSER = {
 
 # CORS HEADERS Configuration
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",
-    "http://127.0.0.1:8080",
-    "http://192.168.11.106:8080",
+    "http://localhost:1337",  # for nginx server
+    "http://localhost:8000",  # for django itself
 ]
 
 if os.environ.get('ENV') != 'PRODUCTION':
-    CORS_ALLOWED_ORIGINS.append("http://localhost:3000")
-    CORS_ALLOWED_ORIGINS.append("http://localhost:1337")  # for nginx server
+    CORS_ALLOWED_ORIGINS.append("http://localhost:3000")  # react
+    CORS_ALLOWED_ORIGINS.append("http://127.0.0.1:8080")  # vuejs
+    CORS_ALLOWED_ORIGINS.append("http://192.168.11.106:8080")  # vuejs
+    CORS_ALLOWED_ORIGINS.append("http://localhost:8080")  # vuejs
 
 # allows http verbs
 
