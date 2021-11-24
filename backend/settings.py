@@ -290,7 +290,7 @@ CORS_ALLOW_METHODS = list(default_methods) + [
 ]
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
-    'X-Amz-Date',
+    'X-Amz-Date',  # to make nginx for work
 ]
 
 # Configuration for django resize
