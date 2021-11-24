@@ -290,7 +290,7 @@ CORS_ALLOW_METHODS = list(default_methods) + [
 ]
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
-    #  "my-custom-header",
+    'X-Amz-Date',
 ]
 
 # Configuration for django resize
