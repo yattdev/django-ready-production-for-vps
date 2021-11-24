@@ -11,6 +11,7 @@ services:
             - ./.env.prod.env # content env variable for databases and django
         volumes:
           - static_volume:/home/alassane/yattblog/staticfiles
+          - media_volume:/home/alassane/yattblog/mediafiles
         expose:
             - 8000
         depends_on:
@@ -23,9 +24,10 @@ services:
         env_file:
             - ./.env.prod.env # content env variable for databases and django
     nginx:
-        build: ./nginx
+        build: ./nginx_conf
         volumes:
             - static_volume:/home/alassane/yattblog/staticfiles
+            - media_volume:/home/alassane/yattblog/mediafiles
         ports:
             - 1337:80
         depends_on:
@@ -38,3 +40,4 @@ services:
 volumes:
     yattblog_postgres:
     static_volume:
+    media_volume:
