@@ -280,6 +280,7 @@ CORS_ALLOWED_ORIGINS = [
 
 if os.environ.get('ENV') != 'PRODUCTION':
     CORS_ALLOWED_ORIGINS.append("http://localhost:3000")
+    CORS_ALLOWED_ORIGINS.append("http://localhost:1337")  # for nginx server
 
 # allows http verbs
 
