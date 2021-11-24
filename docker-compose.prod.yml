@@ -23,8 +23,8 @@ services:
             - yattblog_postgres:/var/lib/postgresql/data/
         env_file:
             - ./.env.prod.env # content env variable for databases and django
-    nginx:
-        build: ./nginx_conf
+    nginx_server:  # Rename service nginx_server because of warning orphans
+        build: ./nginx
         volumes:
             - static_volume:/home/alassane/yattblog/staticfiles
             - media_volume:/home/alassane/yattblog/mediafiles
