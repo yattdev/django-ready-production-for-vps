@@ -14,6 +14,6 @@ fi
 # Some stuff when build done and postgres ready
 python manage.py makemigrations --noinput --traceback
 python manage.py migrate --noinput
-python manage.py collectstatic -n --noinput --clean
+python manage.py collectstatic -n --noinput --clear
 
 exec "$@"
