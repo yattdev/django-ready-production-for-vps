@@ -208,10 +208,9 @@ if os.environ.get('ENV') == 'PRODUCTION':
     ]
 
     MEDIA_URL = '/media/'
-    MEDIA_ROOT = '/media'
+    MEDIA_ROOT = location('mediafiles')
 
     ADMIN_MEDIA_PREFIX = 'media'
-    # "************ END DROPBOX CONFIGURATION ************"
 
     import dj_database_url
 
