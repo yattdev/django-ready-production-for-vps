@@ -7,6 +7,6 @@ services:
           - db
     db:
         image: postgres:12-alpine
-        container_name: yattblog_postgres
+        container_name: yattblog_db
     cache:
       image: redis:latest

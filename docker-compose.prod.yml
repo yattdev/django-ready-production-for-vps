@@ -2,10 +2,9 @@ version: '3.8'
 
 services:
     web:
-        container_name: yattblog_django
         build:
-            context: ./
-            dockerfile: Dockerfile.prod
+            context: .
+            dockerfile: ./Dockerfile.prod
         command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
         env_file:
             - ./.prod.env # content env variable for databases and django
@@ -18,14 +17,13 @@ services:
           - db
     db:
         image: postgres:12-alpine
-        container_name: yattblog_db
         volumes:
             - yattblog_db_volume:/var/lib/postgresql/data/
         env_file:
             - ./.prod.db.env # content env variable for databases and django
     nginx-proxy: # Autogenerate a nginx-config to each container on same network with VIRTUAL_HOST set
         container_name: nginx-proxy
-        build: ./nginx
+        build: nginx
         restart: always
         ports:
             - 443:443
