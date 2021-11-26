@@ -1,0 +1,9 @@
+location /static/ {
+    alias /home/alassane/yattblog/staticfiles/;
+    add_header 'Access-Control-Allow-Origin' '*';
+}
+
+location /media/ {
+    alias /home/alassane/yattblog/mediafiles/;
+    add_header 'Access-Control-Allow-Origin' '*';
+}
