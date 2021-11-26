@@ -60,3 +60,7 @@ volumes:
     yattblog_db:
     static_volume:
     media_volume:
+    certs:
+    html:
+    vhost:
+    acme:
