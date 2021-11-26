@@ -274,6 +274,7 @@ DJOSER = {
 # CORS HEADERS Configuration
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:1337",  # for nginx server
+    "http://localhost:80",  # for nginx server
     "http://localhost:8000",  # for django itself
 ]
 
