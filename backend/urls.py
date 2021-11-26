@@ -40,14 +40,15 @@ schemas_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('blog.urls')),
+    path('blog', include('blog.urls')),
     path('api/v1/', include('api.urls')),
     # swagger logout url
     path('accounts/logout/',
          RedirectView.as_view(url=reverse_lazy('blog:logout'))),
     path('accounts/login/',
          RedirectView.as_view(url=reverse_lazy('blog:login'))),
-    path('api/v1/docs',
+    path('', RedirectView.as_view(url=reverse_lazy('openapi-schemas'))),
+    path('api/v1/docs/',
          schemas_view.with_ui('swagger', cache_timeout=0),
          name="openapi-schemas"),
 
