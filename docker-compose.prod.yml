@@ -57,7 +57,7 @@ services:
 
 
 volumes:
-    yattblog_db:
+    yattblog_db_volume:
     static_volume:
     media_volume:
     certs:
