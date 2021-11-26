@@ -17,7 +17,6 @@ pillow = "*"
 django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
 django-resized = "*"
-django-storages = {extras = ["dropbox"], version = "*"}
 dj-database-url = "*"
 gunicorn = "*"
 django-taggit = "*"
@@ -35,6 +34,7 @@ whitenoise = "*"
 coverage = "*"
 faker = "*"
 factory-boy = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.8"
