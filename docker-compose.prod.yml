@@ -18,26 +18,45 @@ services:
           - db
     db:
         image: postgres:12-alpine
-        container_name: yattblog_DB
+        container_name: yattblog_db
         volumes:
-            - yattblog_postgres:/var/lib/postgresql/data/
+            - yattblog_db_volume:/var/lib/postgresql/data/
         env_file:
             - ./.prod.db.env # content env variable for databases and django
-    nginx:
+    nginx-proxy: # Autogenerate a nginx-config to each container on same network with VIRTUAL_HOST set
+        container_name: nginx-proxy
         build: ./nginx
-        volumes:
-            - static_volume:/home/alassane/yattblog/staticfiles
-            - media_volume:/home/alassane/yattblog/mediafiles
+        restart: always
         ports:
-            - 1337:80
+            - 443:443
+            - 80:80
+        volumes:
+            - static_volume:/home/alassane/yattblog/staticfiles # saved
+            - media_volume:/home/alassane/yattblog/mediafiles # saved
+            - certs:/etc/nginx/certs # stores certificates, private keys, and ACME account keys
+            - html:/usr/share/nginx/html # where store http-01 file, that content a token and key
+            - vhost:/etc/nginx/vhost.d # change vhost, content static and media location and required for CA
+            - /var/run/docker.sock:/tmp/docker.sock:ro
         depends_on:
             - web
+    nginx-proxy-letsencrypt: # provide and ssl certificate to each container-server detected by nginx-provide
+        image: jrcs/letsencrypt-nginx-proxy-companion
+        env_file:
+          - ./.staging.proxy-companion.env
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock:ro
+          - certs:/etc/nginx/certs # as above
+          - html:/usr/share/nginx/html # as above
+          - vhost:/etc/nginx/vhost.d # as above
+          - acme:/etc/acme.sh # to store acme.sh configuration and state
+        depends_on:
+          - nginx-proxy
     cache:
       environment:
         TTL: '500'
 
 
 volumes:
-    yattblog_postgres:
+    yattblog_db:
     static_volume:
     media_volume:
