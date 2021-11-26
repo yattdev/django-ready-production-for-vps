@@ -39,10 +39,10 @@ services:
             - /var/run/docker.sock:/tmp/docker.sock:ro
         depends_on:
             - web
-    nginx-proxy-letsencrypt: # provide and ssl certificate to each container-server detected by nginx-provide
+    nginx-proxy-letsencrypt: # Provide and ssl certificate to each container-server detected by nginx-provide
         image: jrcs/letsencrypt-nginx-proxy-companion
         env_file:
-          - ./.staging.proxy-companion.env
+          - ./.prod.proxy-companion.env
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro
           - certs:/etc/nginx/certs # as above
