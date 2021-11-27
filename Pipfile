@@ -27,6 +27,8 @@ django-crispy-forms = "*"
 django-environ = "*"
 psycopg2-binary = "*"
 setuptools = "*"
+celery = "*"
+redis = "*"
 
 [dev-packages]
 django-pdb = "*"
