@@ -17,7 +17,6 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import reverse
 from django.views.generic import RedirectView
 from django.urls import reverse_lazy
 from drf_yasg.views import get_schema_view
@@ -27,8 +26,9 @@ from django.contrib.auth import views as auth_views
 
 schemas_view = get_schema_view(
     openapi.Info(
-        title="Gestion de pochette d'albums API",
-        description="A simple API for crud albums pochette",
+        title="RESTFULL API FOR PERSONNAL BLOG APPLICATION",
+        description="API BLOG APPLICATION MADE WITH\
+        DJANGO-POSTGRES-GUNICORN-NGINX-DOCKER",
         default_version="v1",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="yattdeveloper@gmail"),
