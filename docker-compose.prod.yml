@@ -11,6 +11,7 @@ services:
         volumes:
           - static_volume:/home/alassane/yattblog/staticfiles
           - media_volume:/home/alassane/yattblog/mediafiles
+          - web_data:/home/alassane/yattblog
         expose:
             - 8000
         depends_on:
@@ -56,6 +57,7 @@ services:
 
 volumes:
     yattblog_db_volume:
+    web_data:
     static_volume:
     media_volume:
     certs:
