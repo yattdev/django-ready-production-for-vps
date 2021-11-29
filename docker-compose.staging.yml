@@ -53,10 +53,6 @@ services:
           - acme:/etc/acme.sh # to store acme.sh configuration and state
         depends_on:
           - nginx-proxy
-    cache:
-      environment:
-        TTL: '500'
-
 
 volumes:
     staging:
