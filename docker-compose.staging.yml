@@ -26,7 +26,7 @@ services:
             - ./.staging.db.env # content env variable for databases and django
     nginx-proxy:
         container_name: nginx-proxy
-        build: nginx
+        build: ./nginx_local
         restart: always
         ports:
             - 443:443
