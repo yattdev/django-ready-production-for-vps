@@ -50,11 +50,26 @@ services:
           - acme:/etc/acme.sh # to store acme.sh configuration and state
         depends_on:
           - nginx-proxy
+    celery:
+        restart: always
+        build:
+          context: .
+          dockerfile: ./Dockerfile.prod
+        command: celery -A backend worker -l info
+        volumes:
+          - celery_data:/home/alassane/yattblog
+        env_file:
+            - ./.prod.celery.env # content env variable for databases and django
+        depends_on:
+          - db
+          - redis
+          - web
 
 
 volumes:
     yattblog_db_volume:
     web_data:
+    celery_data:
     static_volume:
     media_volume:
     certs:
