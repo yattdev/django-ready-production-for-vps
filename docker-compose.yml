@@ -8,5 +8,7 @@ services:
     db:
         image: postgres:12-alpine
         container_name: yattblog_db
-    cache:
-      image: redis:latest
+    redis:
+        image: redis:alpine
+        ports:
+            - 6379
