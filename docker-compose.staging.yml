@@ -12,6 +12,7 @@ services:
         volumes:
           - static_volume:/home/alassane/yattblog/staticfiles
           - media_volume:/home/alassane/yattblog/mediafiles
+          - staging:/home/alassane/yattblog
         expose:
             - 8000
         depends_on:
@@ -58,6 +59,7 @@ services:
 
 
 volumes:
+    staging:
     staging_postgres:
     static_volume:
     media_volume:
@@ -65,3 +67,4 @@ volumes:
     html:
     vhost:
     acme:
+    celery_data:
