@@ -3,7 +3,7 @@ on:
   push:
     branches: [ main ]
 
-jobs:
+jobs: # This comment for test CI/CI and final correction
   continuous-integration:
     runs-on: ubuntu-latest
     steps:
