@@ -2,7 +2,7 @@ version: 0.0
 os: ubuntu
 files:
  - source: .
-   destination: /home/alassane/yattblog
+   destination: /home/ubuntu/yattblog
 hooks:
   AfterInstall:
    - location: utils_shortcuts/docker_container_up
