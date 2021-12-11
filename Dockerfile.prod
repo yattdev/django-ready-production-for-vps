@@ -31,14 +31,7 @@ COPY . .
 # RUN flake8 --ignore=E501,F401 .
 
 # Clean Pipfile.lock and generate requirements.txt
-RUN pipenv clean && \
-        pipenv lock -r > requirements.txt && \
-        pipenv --rm
 COPY ./requirements.txt .
-
-# Uninstall pipenv
-RUN pipenv --clear && \
-        pip uninstall -y pipenv virtualenv-clone virtualenv
 
 # install dependencies
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
