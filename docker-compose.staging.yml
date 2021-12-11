@@ -8,7 +8,7 @@ services:
             dockerfile: ./Dockerfile.prod
         command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
         env_file:
-            - ./.staging.env # content env variable for databases and django
+            - ./.env_file/staging/.staging.env # content env variable for databases and django
         volumes:
           - static_volume:/home/alassane/yattblog/staticfiles
           - media_volume:/home/alassane/yattblog/mediafiles
@@ -23,7 +23,7 @@ services:
         volumes:
             - staging_postgres:/var/lib/postgresql/data/
         env_file:
-            - ./.staging.db.env # content env variable for databases and django
+            - ./.env_file/staging/.staging.db.env # content env variable for databases and django
     nginx-proxy:
         container_name: nginx-proxy
         build: ./nginx
@@ -44,7 +44,7 @@ services:
     nginx-proxy-letsencrypt:
         image: jrcs/letsencrypt-nginx-proxy-companion
         env_file:
-          - ./.staging.proxy-companion.env
+          - ./.env_file/staging/.staging.proxy-companion.env
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro
           - certs:/etc/nginx/certs # as above
@@ -64,7 +64,7 @@ services:
             - media_volume:/home/alassane/yattblog/mediafiles # saved
             - celery_data:/home/alassane/yattblog
         env_file:
-            - ./.staging.celery.env # content env variable for databases and django
+            - ./.env_file/staging/.staging.celery.env # content env variable for databases and django
         depends_on:
           - db
           - redis
