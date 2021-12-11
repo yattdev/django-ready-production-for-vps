@@ -31,6 +31,18 @@ jobs: # This comment for test CI/CI and final correction
       # Step 5
       - name: Build Application and Run unit Test
         run: python manage.py test
+        env:
+          ENV: ${{ github.SQL_HOST }}
+          DEBUG: True
+          DJANGO_ALLOWED_HOSTS: ${{ secrets.DJANGO_ALLOWED_HOSTS }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          SQL_ENGINE: ${{ secrets.SQL_ENGINE }}
+          DATABASE: ${{ secrets.DATABASE }}
+          SQL_DB: ${{ secrets.SQL_DB }}
+          SQL_USER: ${{ secrets.SQL_USER }}
+          SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
+          SQL_HOST: ${{ secrets.SQL_HOST }}
+          SQL_PORT: ${{ secrets.SQL_PORT }}
 
   continuous-deployment:
     runs-on: ubuntu-latest
