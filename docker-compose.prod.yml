@@ -7,7 +7,7 @@ services:
             dockerfile: ./Dockerfile.prod
         command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
         env_file:
-            - ./.prod.env # content env variable for databases and django
+            - ./.env_file/prod/.prod.env # content env variable for databases and django
         volumes:
           - static_volume:/home/alassane/yattblog/staticfiles
           - media_volume:/home/alassane/yattblog/mediafiles
@@ -21,7 +21,7 @@ services:
         volumes:
             - yattblog_db_volume:/var/lib/postgresql/data/
         env_file:
-            - ./.prod.db.env # content env variable for databases and django
+            - ./.env_file/prod/.prod.db.env # content env variable for databases and django
     nginx-proxy: # Autogenerate a nginx-config to each container on same network with VIRTUAL_HOST set
         container_name: nginx-proxy
         build: nginx
@@ -41,7 +41,7 @@ services:
     nginx-proxy-letsencrypt: # Provide and ssl certificate to each container-server detected by nginx-provide
         image: jrcs/letsencrypt-nginx-proxy-companion
         env_file:
-          - ./.prod.proxy-companion.env
+          - ./.env_file/prod/.prod.proxy-companion.env
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro
           - certs:/etc/nginx/certs # as above
@@ -59,7 +59,7 @@ services:
         volumes:
           - celery_data:/home/alassane/yattblog
         env_file:
-            - ./.prod.celery.env # content env variable for databases and django
+            - ./.env_file/prod/.prod.celery.env # content env variable for databases and django
         depends_on:
           - db
           - redis
