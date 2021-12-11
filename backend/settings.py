@@ -28,7 +28,7 @@ def location(x):
 if os.environ.get('ENV') != 'PRODUCTION' and not os.environ.get('IS_DOCKER'):
     # Take environment variables from local.env file
     # if not production mode and not in docker
-    environ.Env.read_env(location('.local.env'))
+    environ.Env.read_env(location('./.env_file/local/.local.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
