@@ -1,0 +1,10 @@
+version: 0.0
+os: ubuntu
+files:
+ - source: .
+   destination: /home/alassane/yattblog
+hooks:
+  AfterInstall:
+   - location: utils_shortcuts/docker_container_up
+     timeout: 500
+     runas: root
