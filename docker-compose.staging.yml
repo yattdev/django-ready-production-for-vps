@@ -41,18 +41,18 @@ services:
         depends_on:
             - web
 
-    nginx-proxy-letsencrypt:
-        image: jrcs/letsencrypt-nginx-proxy-companion
-        env_file:
-          - ./.staging.proxy-companion.env
-        volumes:
-          - /var/run/docker.sock:/var/run/docker.sock:ro
-          - certs:/etc/nginx/certs # as above
-          - html:/usr/share/nginx/html # as above
-          - vhost:/etc/nginx/vhost.d # as above
-          - acme:/etc/acme.sh # to store acme.sh configuration and state
-        depends_on:
-          - nginx-proxy
+    # nginx-proxy-letsencrypt:
+        # image: jrcs/letsencrypt-nginx-proxy-companion
+        # env_file:
+          # - ./.staging.proxy-companion.env
+        # volumes:
+          # - /var/run/docker.sock:/var/run/docker.sock:ro
+          # - certs:/etc/nginx/certs # as above
+          # - html:/usr/share/nginx/html # as above
+          # - vhost:/etc/nginx/vhost.d # as above
+          # - acme:/etc/acme.sh # to store acme.sh configuration and state
+        # depends_on:
+          # - nginx-proxy
     celery:
         restart: always
         build:
@@ -60,7 +60,9 @@ services:
           dockerfile: ./Dockerfile.prod
         command: celery -A backend worker -l info
         volumes:
-          - celery_data:/home/alassane/yattblog
+            - static_volume:/home/alassane/yattblog/staticfiles # saved
+            - media_volume:/home/alassane/yattblog/mediafiles # saved
+            - celery_data:/home/alassane/yattblog
         env_file:
             - ./.staging.celery.env # content env variable for databases and django
         depends_on:
