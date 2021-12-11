@@ -26,7 +26,7 @@ services:
             - ./.staging.db.env # content env variable for databases and django
     nginx-proxy:
         container_name: nginx-proxy
-        build: ./nginx_local
+        build: ./nginx
         restart: always
         ports:
             - 443:443
@@ -41,18 +41,18 @@ services:
         depends_on:
             - web
 
-    # nginx-proxy-letsencrypt:
-        # image: jrcs/letsencrypt-nginx-proxy-companion
-        # env_file:
-          # - ./.staging.proxy-companion.env
-        # volumes:
-          # - /var/run/docker.sock:/var/run/docker.sock:ro
-          # - certs:/etc/nginx/certs # as above
-          # - html:/usr/share/nginx/html # as above
-          # - vhost:/etc/nginx/vhost.d # as above
-          # - acme:/etc/acme.sh # to store acme.sh configuration and state
-        # depends_on:
-          # - nginx-proxy
+    nginx-proxy-letsencrypt:
+        image: jrcs/letsencrypt-nginx-proxy-companion
+        env_file:
+          - ./.staging.proxy-companion.env
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock:ro
+          - certs:/etc/nginx/certs # as above
+          - html:/usr/share/nginx/html # as above
+          - vhost:/etc/nginx/vhost.d # as above
+          - acme:/etc/acme.sh # to store acme.sh configuration and state
+        depends_on:
+          - nginx-proxy
     celery:
         restart: always
         build:
