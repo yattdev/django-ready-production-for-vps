@@ -2,20 +2,24 @@ version: '3.8'
 
 services:
     web:
+        restart: always
         build:
             context: .
             dockerfile: ./Dockerfile.prod
-        command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+        command: >
+            bash -c "gunicorn backend.wsgi:application --bind 0.0.0.0:8000 &&
+                     celery -A backend worker -l info"
         env_file:
-            - ./.env_file/prod/.prod.env # content env variable for databases and django
+            - ./.env_file/prod/.prod.celery.env # content env variable for databases and django
         volumes:
           - static_volume:/home/alassane/yattblog/staticfiles
           - media_volume:/home/alassane/yattblog/mediafiles
-          - web_data:/home/alassane/yattblog
+          - .:/home/alassane/yattblog
         expose:
             - 8000
         depends_on:
           - db
+          - redis
     db:
         image: postgres:12-alpine
         volumes:
@@ -50,21 +54,6 @@ services:
           - acme:/etc/acme.sh # to store acme.sh configuration and state
         depends_on:
           - nginx-proxy
-    celery:
-        restart: always
-        build:
-          context: .
-          dockerfile: ./Dockerfile.prod
-        command: celery -A backend worker -l info
-        volumes:
-          - celery_data:/home/alassane/yattblog
-        env_file:
-            - ./.env_file/prod/.prod.celery.env # content env variable for databases and django
-        depends_on:
-          - db
-          - redis
-          - web
-
 
 volumes:
     yattblog_db_volume:
