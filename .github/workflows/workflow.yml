@@ -22,12 +22,10 @@ jobs: # This comment for test CI/CI and final correction
 
       - name: run migrations
         run: |
-            docker-compose -f docker-compose.yml -f docker-compose.staging.yml exec -T web python manage.py makemigrations --noinput
             docker-compose -f docker-compose.yml -f docker-compose.staging.yml exec -T web python manage.py migrate --noinput
       # Step 4
       - name: Run unit Test on docker container
-        run: |
-            sudo docker-compose -f docker-compose.yml -f docker-compose.staging.yml exec -T web python manage.py test --noinput
+        run: sudo docker-compose -f docker-compose.yml -f docker-compose.staging.yml run --user="root" web sh -c "python manage.py test"
       # Step 5
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
