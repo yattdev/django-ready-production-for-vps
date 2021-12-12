@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
+django = "==3.2.9"
 djoser = "*"
 djangorestframework = "*"
 markdown = "*"
@@ -14,7 +14,6 @@ uritemplate = "*"
 drf-yasg = "*"
 django-autoslug = "*"
 pillow = "*"
-django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
 django-resized = "*"
 dj-database-url = "*"
@@ -29,14 +28,14 @@ psycopg2-binary = "*"
 setuptools = "*"
 celery = "*"
 redis = "*"
-
-[dev-packages]
 django-pdb = "*"
 whitenoise = "*"
 coverage = "*"
 faker = "*"
 factory-boy = "*"
 django-cors-headers = "*"
+
+[dev-packages]
 
 [requires]
 python_version = "3.8"
