@@ -12,9 +12,9 @@ then
 fi
 
 # Update database with migrate
-python manage.py migrate --noinput
+python manage.py migrate --noinput --traceback
 
 # Run test with test
-python manage.py test --noinput
+python manage.py test --noinput --traceback
 
 exec "$@"
