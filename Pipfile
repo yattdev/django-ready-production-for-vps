@@ -29,12 +29,14 @@ psycopg2-binary = "*"
 setuptools = "*"
 celery = "*"
 redis = "*"
+
+[dev-packages]
 django-pdb = "*"
+whitenoise = "*"
 coverage = "*"
 faker = "*"
 factory-boy = "*"
-
-[dev-packages]
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.8"
