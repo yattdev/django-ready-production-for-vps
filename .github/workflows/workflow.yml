@@ -27,7 +27,7 @@ jobs: # This comment for test CI/CI and final correction
           aws-region: eu-west-3
       # Step 5
       - name: Build Application and Run unit Test
-        run:
+        run: |
             docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec web python manage.py test
         env:
           ENV: ${{ github.SQL_HOST }}
