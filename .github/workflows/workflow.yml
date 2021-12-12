@@ -6,8 +6,6 @@ on:
 jobs: # This comment for test CI/CI and final correction
   continuous-integration:
     runs-on: ubuntu-latest
-    container:
-        options: --user root
 
     steps:
       # Step 1
@@ -29,7 +27,7 @@ jobs: # This comment for test CI/CI and final correction
       # Step 4
       - name: Run unit Test on docker container
         run: |
-            docker-compose -f docker-compose.yml -f docker-compose.staging.yml exec -T web python manage.py test --noinput
+            sudo docker-compose -f docker-compose.yml -f docker-compose.staging.yml exec -T web python manage.py test --noinput
       # Step 5
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
