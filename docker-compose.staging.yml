@@ -10,7 +10,7 @@ services:
             bash -c "gunicorn backend.wsgi:application --bind 0.0.0.0:8000 &&
                      celery -A backend worker -l info"
         env_file:
-            - ./staging/.staging.celery.env # content env variable for databases and django
+            - ./.env_file/staging/.staging.celery # content env variable for databases and django
         volumes:
           - static_volume:/home/alassane/yattblog/staticfiles
           - media_volume:/home/alassane/yattblog/mediafiles
@@ -23,9 +23,9 @@ services:
     db:
         image: postgres:12-alpine
         volumes:
-            - staging_db_volume:/var/lib/postgresql/data/
+            - yattblog_db_volume:/var/lib/postgresql/data/
         env_file:
-            - ./staging/.staging.db.env # content env variable for databases and django
+            - ./.env_file/staging/.staging.db_ # content env variable for databases and django
     nginx-proxy: # Autogenerate a nginx-config to each container on same network with VIRTUAL_HOST set
         container_name: nginx-proxy
         build: nginx
@@ -45,7 +45,7 @@ services:
     nginx-proxy-letsencrypt: # Provide and ssl certificate to each container-server detected by nginx-provide
         image: jrcs/letsencrypt-nginx-proxy-companion
         env_file:
-          - ./staging/.staging.proxy-companion.env
+          - ./.env_file/staging/.staging.proxy-companion
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro
           - certs:/etc/nginx/certs # as above
@@ -56,7 +56,7 @@ services:
           - nginx-proxy
 
 volumes:
-    staging_db_volume:
+    yattblog_db_volume:
     web_data:
     celery_data:
     static_volume:

@@ -1,0 +1,31 @@
+# DJANGO VARIABLES
+ENV=PRODUCTION
+DEBUG=False
+DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+SECRET_KEY='+p{e;OUYC\tup8wE;(<;"IJgx?7OYZ{=L"FW:H`@y'
+
+# -- DATABASE VARIABLES
+SQL_ENGINE=django.db.backends.postgresql
+DATABASE=postgres
+SQL_DB=staging_db
+SQL_USER=staging_user
+SQL_PASSWORD=staging_password
+SQL_HOST=db
+SQL_PORT=5432
+
+# FOR LETSENCRYPT
+VIRTUAL_HOST=localhost
+VIRTUAL_PORT=8000
+LETSENCRYPT_HOST=localhost
+
+# Celery stuff configutation
+#  BROKER_URL = 'redis://localhost:6379'
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
+
+#### CELERY ACCESS DATABASE VARIABLES ####
+DB_HOST=db
+DB_NAME=staging_db
+DB_USER=staging_user
+DB_PASS=staging_password
+DB_PORT=5432
