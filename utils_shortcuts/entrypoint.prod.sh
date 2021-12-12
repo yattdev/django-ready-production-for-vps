@@ -11,4 +11,10 @@ then
     echo "PostgreSQL started"
 fi
 
+# Update database with migrate
+python manage.py migrate --noinput
+
+# Run test with test
+python manage.py test --noinput
+
 exec "$@"

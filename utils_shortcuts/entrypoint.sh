@@ -13,9 +13,9 @@ then
 fi
 
 # python manage.py flush --no-input
-python manage.py migrate
+python manage.py migrate --noinput
 
 # run test
-python manage.py test
+python manage.py test --noinput
 
 exec "$@"
