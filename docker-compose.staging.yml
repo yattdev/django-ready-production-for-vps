@@ -36,32 +36,10 @@ services:
         volumes:
             - static_volume:/home/alassane/yattblog/staticfiles # saved
             - media_volume:/home/alassane/yattblog/mediafiles # saved
-            - certs:/etc/nginx/certs # stores certificates, private keys, and ACME account keys
-            - html:/usr/share/nginx/html # where store http-01 file, that content a token and key
-            - vhost:/etc/nginx/vhost.d # change vhost, content static and media location and required for CA
-            - /var/run/docker.sock:/tmp/docker.sock:ro
         depends_on:
             - web
-    nginx-proxy-letsencrypt: # Provide and ssl certificate to each container-server detected by nginx-provide
-        image: jrcs/letsencrypt-nginx-proxy-companion
-        env_file:
-          - ./.env_file/staging/.staging.proxy-companion
-        volumes:
-          - /var/run/docker.sock:/var/run/docker.sock:ro
-          - certs:/etc/nginx/certs # as above
-          - html:/usr/share/nginx/html # as above
-          - vhost:/etc/nginx/vhost.d # as above
-          - acme:/etc/acme.sh # to store acme.sh configuration and state
-        depends_on:
-          - nginx-proxy
 
 volumes:
     yattblog_db_volume:
-    web_data:
-    celery_data:
     static_volume:
     media_volume:
-    certs:
-    html:
-    vhost:
-    acme:
