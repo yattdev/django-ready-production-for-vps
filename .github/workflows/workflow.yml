@@ -15,7 +15,7 @@ jobs: # This comment for test CI/CI and final correction
         with:
           python-version: 3.8.10
       # Step 3
-      - name: Install dependencies
+      - name: Build and run docker container
         run: |
             docker-compose -f docker-compose.yml -f docker-compose.staging.yml up --build -d
       # Step 4
@@ -26,7 +26,7 @@ jobs: # This comment for test CI/CI and final correction
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-3
       # Step 5
-      - name: Build Application and Run unit Test
+      - name: Run unit Test on docker container
         run: |
             docker-compose -f docker-compose.yml -f docker-compose.staging.yml exec web python manage.py test
         env:
