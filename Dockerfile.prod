@@ -51,7 +51,7 @@ ENV IS_DOCKER 1
 # add new user
 RUN useradd -ms /bin/bash alassane
 # add user alassane to (root group).
-RUN usermod -aG root ${USER}
+RUN usermod -aG root alassane
 
 # Set work directory
 ENV HOME=/home/alassane
