@@ -46,7 +46,7 @@ jobs: # This comment for test CI/CI and final correction
           SQL_HOST: postgres
           SQL_PORT: ${{ secrets.SQL_PORT }}
 
-  continuous-deployment:
+  continuous-deployment: # Just a comment to test deployment
     runs-on: ubuntu-latest
     needs: [continuous-integration]
     if: github.ref == 'refs/heads/main'
