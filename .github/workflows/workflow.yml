@@ -17,7 +17,7 @@ jobs: # This comment for test CI/CI and final correction
       # Step 3
       - name: Install dependencies
         run: |
-            docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
+            docker-compose -f docker-compose.yml -f docker-compose.staging.yml up --build -d
       # Step 4
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -28,7 +28,7 @@ jobs: # This comment for test CI/CI and final correction
       # Step 5
       - name: Build Application and Run unit Test
         run: |
-            docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec web python manage.py test
+            docker-compose -f docker-compose.yml -f docker-compose.staging.yml exec web python manage.py test
         env:
           ENV: ${{ github.SQL_HOST }}
           DEBUG: True
