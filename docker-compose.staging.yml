@@ -2,31 +2,33 @@ version: '3.8'
 
 services:
     web:
-        container_name: staging_django
+        restart: always
         build:
             context: .
             dockerfile: ./Dockerfile.prod
-        command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+        command: >
+            bash -c "gunicorn backend.wsgi:application --bind 0.0.0.0:8000 &&
+                     celery -A backend worker -l info"
         env_file:
-            - ./.env_file/staging/.staging.env # content env variable for databases and django
+            - ./staging_env_file/staging/.staging.celery.env # content env variable for databases and django
         volumes:
           - static_volume:/home/alassane/yattblog/staticfiles
           - media_volume:/home/alassane/yattblog/mediafiles
-          - staging:/home/alassane/yattblog
+          - .:/home/alassane/yattblog
         expose:
             - 8000
         depends_on:
           - db
+          - redis
     db:
         image: postgres:12-alpine
-        container_name: staging_postgres
         volumes:
-            - staging_postgres:/var/lib/postgresql/data/
+            - staging_db_volume:/var/lib/postgresql/data/
         env_file:
-            - ./.env_file/staging/.staging.db.env # content env variable for databases and django
-    nginx-proxy:
+            - ./staging_env_file/staging/.staging.db.env # content env variable for databases and django
+    nginx-proxy: # Autogenerate a nginx-config to each container on same network with VIRTUAL_HOST set
         container_name: nginx-proxy
-        build: ./nginx
+        build: nginx
         restart: always
         ports:
             - 443:443
@@ -35,16 +37,15 @@ services:
             - static_volume:/home/alassane/yattblog/staticfiles # saved
             - media_volume:/home/alassane/yattblog/mediafiles # saved
             - certs:/etc/nginx/certs # stores certificates, private keys, and ACME account keys
-            - html:/usr/share/nginx/html # where store http-01 file, that content a token
-            - vhost:/etc/nginx/vhost.d # change vhost and required for CA
+            - html:/usr/share/nginx/html # where store http-01 file, that content a token and key
+            - vhost:/etc/nginx/vhost.d # change vhost, content static and media location and required for CA
             - /var/run/docker.sock:/tmp/docker.sock:ro
         depends_on:
             - web
-
-    nginx-proxy-letsencrypt:
+    nginx-proxy-letsencrypt: # Provide and ssl certificate to each container-server detected by nginx-provide
         image: jrcs/letsencrypt-nginx-proxy-companion
         env_file:
-          - ./.env_file/staging/.staging.proxy-companion.env
+          - ./staging_env_file/staging/.staging.proxy-companion.env
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro
           - certs:/etc/nginx/certs # as above
@@ -53,30 +54,14 @@ services:
           - acme:/etc/acme.sh # to store acme.sh configuration and state
         depends_on:
           - nginx-proxy
-    celery:
-        restart: always
-        build:
-          context: .
-          dockerfile: ./Dockerfile.prod
-        command: celery -A backend worker -l info
-        volumes:
-            - static_volume:/home/alassane/yattblog/staticfiles # saved
-            - media_volume:/home/alassane/yattblog/mediafiles # saved
-            - celery_data:/home/alassane/yattblog
-        env_file:
-            - ./.env_file/staging/.staging.celery.env # content env variable for databases and django
-        depends_on:
-          - db
-          - redis
-          - web
 
 volumes:
-    staging:
-    staging_postgres:
+    staging_db_volume:
+    web_data:
+    celery_data:
     static_volume:
     media_volume:
     certs:
     html:
     vhost:
     acme:
-    celery_data:
