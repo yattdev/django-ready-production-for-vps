@@ -10,7 +10,7 @@ services:
             bash -c "gunicorn backend.wsgi:application --bind 0.0.0.0:8000 &&
                      celery -A backend worker -l info"
         env_file:
-            - ./staging_env_file/staging/.staging.celery.env # content env variable for databases and django
+            - ./staging/.staging.celery.env # content env variable for databases and django
         volumes:
           - static_volume:/home/alassane/yattblog/staticfiles
           - media_volume:/home/alassane/yattblog/mediafiles
@@ -25,7 +25,7 @@ services:
         volumes:
             - staging_db_volume:/var/lib/postgresql/data/
         env_file:
-            - ./staging_env_file/staging/.staging.db.env # content env variable for databases and django
+            - ./staging/.staging.db.env # content env variable for databases and django
     nginx-proxy: # Autogenerate a nginx-config to each container on same network with VIRTUAL_HOST set
         container_name: nginx-proxy
         build: nginx
@@ -45,7 +45,7 @@ services:
     nginx-proxy-letsencrypt: # Provide and ssl certificate to each container-server detected by nginx-provide
         image: jrcs/letsencrypt-nginx-proxy-companion
         env_file:
-          - ./staging_env_file/staging/.staging.proxy-companion.env
+          - ./staging/.staging.proxy-companion.env
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro
           - certs:/etc/nginx/certs # as above
