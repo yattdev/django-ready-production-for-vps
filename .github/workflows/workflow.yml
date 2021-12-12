@@ -20,6 +20,7 @@ jobs: # This comment for test CI/CI and final correction
           python -m pip install --upgrade pip
           pip install pipenv
           pipenv lock -r > requirements.txt
+          pipenv --rm
           pip install -r requirements.txt
       # Step 4
       - name: Configure AWS credentials
