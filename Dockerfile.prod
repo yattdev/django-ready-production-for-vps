@@ -30,8 +30,13 @@ COPY . .
 # Check code with flake8
 # RUN flake8 --ignore=E501,F401 .
 
-# Clean Pipfile.lock and generate requirements.txt
-COPY ./requirements.txt .
+# Generate/Update requirements.txt and Clean Pipfile.lock
+RUN pipenv lock -r > requirements.txt
+Run pipenv --rm
+
+# Uninstall pipenv
+RUN pipenv --clear && \
+        pip uninstall -y pipenv virtualenv-clone virtualenv
 
 # install dependencies
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
@@ -46,6 +51,8 @@ ENV IS_DOCKER 1
 
 # add new user
 RUN useradd -ms /bin/bash alassane
+# add user alassane to (root group).
+RUN usermod -aG root ${USER}
 
 # Set work directory
 ENV HOME=/home/alassane
@@ -66,14 +73,14 @@ RUN apt-get update && apt-get install netcat -y
 
 # Copy project, period dot (.) meant current dir
 COPY --chown=alassane:alassane . $APP_HOME
-RUN mkdir $APP_HOME/staticfiles
-RUN mkdir $APP_HOME/mediafiles
+RUN mkdir -p $APP_HOME/staticfiles
+RUN mkdir -p $APP_HOME/mediafiles
 
 # ENTRYPOINT POINT
 RUN sed -i 's/\r$//g' $APP_HOME/utils_shortcuts/entrypoint.prod.sh
 RUN chmod +x $APP_HOME/utils_shortcuts/entrypoint.prod.sh
 
-# change user to root to change dirs and files owner
+# Switch to root and allow root group users to (read, write and execute)
 USER root
 RUN chown -R alassane:alassane $HOME
 RUN chown -R alassane:alassane $APP_HOME
