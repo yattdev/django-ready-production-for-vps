@@ -17,7 +17,9 @@ jobs: # This comment for test CI/CI and final correction
       # Step 3
       - name: Build and run docker container
         run: |
-            docker-compose -f docker-compose.yml -f docker-compose.staging.yml up --build -d
+            docker-compose -f docker-compose.yml -f docker-compose.staging.yml up --build -d --remove-orphans
+        name: run migrations
+            docker-compose -f docker-compose.yml -f docker-compose.staging.yml exec -T web python manage.py migrate --noinput
       # Step 4
       - name: Run unit Test on docker container
         run: |
