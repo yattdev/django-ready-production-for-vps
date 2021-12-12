@@ -80,7 +80,7 @@ RUN mkdir -p $APP_HOME/mediafiles
 RUN sed -i 's/\r$//g' $APP_HOME/utils_shortcuts/entrypoint.prod.sh
 RUN chmod +x $APP_HOME/utils_shortcuts/entrypoint.prod.sh
 
-# Switch to root and allow root group users to (read, write and execute)
+# Switch to root and change ownership of home and app_home
 USER root
 RUN chown -R alassane:alassane $HOME
 RUN chown -R alassane:alassane $APP_HOME
