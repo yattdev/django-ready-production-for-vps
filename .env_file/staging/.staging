@@ -2,7 +2,7 @@
 ENV=PRODUCTION
 DEBUG=False
 DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-SECRET_KEY='+p{e;OUYC\tup8wE;(<;"IJgx?7OYZ{=L"FW:H`@y'
+SECRET_KEY='CeciNestPasUnSecretPourPersonneJusteBienVisible'
 
 # -- DATABASE VARIABLES
 SQL_ENGINE=django.db.backends.postgresql
