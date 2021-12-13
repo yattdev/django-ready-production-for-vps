@@ -9,4 +9,4 @@ cp -r $HOME/.env_file ./
 # The following command update docker running containers fro prod stuff:
 # If changed container w'll re-create
 # If nothing stuff w'll not do.
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d --remove-orphans
