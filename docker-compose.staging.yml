@@ -7,7 +7,7 @@ services:
             context: .
             dockerfile: ./Dockerfile.prod
         command: >
-            bash -c "gunicorn backend.wsgi:application --bind 0.0.0.0:8000 &&
+            bash -c "gunicorn backend.wsgi:application --bind 0.0.0.0:7000 &&
                      celery -A backend worker -l info"
         env_file:
             - ./.env_file/staging/.staging.celery # content env variable for databases and django
