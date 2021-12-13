@@ -3,6 +3,9 @@
 # move to projet directory
 cd $HOME/yattblog/
 
+# Copy env_file dir from home to projet
+cp -r $HOME/.env_file ./
+
 # The following command update docker running containers fro prod stuff:
 # If changed container w'll re-create
 # If nothing stuff w'll not do.
