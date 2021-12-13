@@ -11,19 +11,13 @@ then
 
 fi
 
-# This condition if juste to run following on container startup
-if ! $INITIALIZE
-then
-    # Update database with migrate
-    python manage.py migrate --noinput --traceback
+# Update database with migrate
+python manage.py migrate --noinput --traceback
 
-    # Run test with test
-    python manage.py test --noinput --traceback
+# Run test with test
+python manage.py test --noinput --traceback
 
-    # Collectstatic files with collectstatic command
-    python manage.py collectstatic --noinput --traceback
-
-    export INITIALIZE="DONE"
-fi
+# Collectstatic files with collectstatic command
+python manage.py collectstatic --noinput --traceback
 
 exec "$@"
