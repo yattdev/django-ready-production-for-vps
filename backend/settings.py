@@ -179,11 +179,6 @@ STATICFILES_FINDERS = [
 STATIC_URL = '/static/'
 STATIC_ROOT = location('static')
 
-STATICFILES_DIRS = [
-    location("users/static"),
-    location("api/static"),
-]
-
 # MEDIA SETTINGS
 MEDIA_URL = '/media/'
 MEDIA_ROOT = location('media/')
@@ -200,12 +195,6 @@ if os.environ.get('ENV') == 'PRODUCTION':
     # Static files (CSS, JavaScript, Images)
     STATIC_URL = '/static/'
     STATIC_ROOT = location('staticfiles')
-
-    #  STATICFILES_DIRS = [
-    #  location("users/static"),
-    #  location("api/static"),
-    #  location("blog/static"),
-    #  ]
 
     MEDIA_URL = '/media/'
     MEDIA_ROOT = location('mediafiles')
