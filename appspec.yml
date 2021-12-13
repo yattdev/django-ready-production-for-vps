@@ -7,8 +7,8 @@ hooks:
   BeforeInstall:
    - location: utils_shortcuts/clean_up
      timeout: 200
-     runas: ubuntu
+     runas: root
   AfterInstall:
    - location: utils_shortcuts/prepareVenv_and_up_docker
      timeout: 300
-     runas: ubuntu
+     runas: root
