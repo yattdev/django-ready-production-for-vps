@@ -6,6 +6,9 @@ cd /home/ubuntu/yattblog/
 # Copy env_file dir from home to projet
 cp -r /home/ubuntu/.env_file ./
 
+# Change Owner of project directory from root to ubuntu
+chown -R ubuntu:ubuntu /home/ubuntu/yattblog
+
 # The following command update docker running containers fro prod stuff:
 # If changed container w'll re-create
 # If nothing stuff w'll not do.
