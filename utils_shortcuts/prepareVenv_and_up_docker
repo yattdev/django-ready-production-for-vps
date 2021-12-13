@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # move to projet directory
-cd $HOME/yattblog/
+cd /home/ubuntu/yattblog/
 
 # Copy env_file dir from home to projet
-cp -r $HOME/.env_file ./
+cp -r /home/ubuntu/.env_file ./
 
 # The following command update docker running containers fro prod stuff:
 # If changed container w'll re-create

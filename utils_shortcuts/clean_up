@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # move to projet directory
-cd $HOME
+cd /home/ubuntu/
 
 # Delete previous projet directory
 # in BeforeInstall hooks, otherwise deployment fail if it exist
