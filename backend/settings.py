@@ -201,11 +201,11 @@ if os.environ.get('ENV') == 'PRODUCTION':
     STATIC_URL = '/static/'
     STATIC_ROOT = location('staticfiles')
 
-    STATICFILES_DIRS = [
-        location("users/static"),
-        location("api/static"),
-        location("blog/static"),
-    ]
+    #  STATICFILES_DIRS = [
+    #  location("users/static"),
+    #  location("api/static"),
+    #  location("blog/static"),
+    #  ]
 
     MEDIA_URL = '/media/'
     MEDIA_ROOT = location('mediafiles')
