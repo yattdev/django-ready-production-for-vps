@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# move to projet directory
+cd /home/ubuntu/
+
+# Clean up <none> image not remove after image build
+docker images | grep none | awk '{ print ; }' | xargs docker rmi -f
