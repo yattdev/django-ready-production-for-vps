@@ -13,10 +13,8 @@ fi
 
 # Update database with migrate
 python manage.py migrate --noinput --traceback
-sleep 5
 
 # Collectstatic files with collectstatic command
 python manage.py collectstatic --noinput --traceback
-sleep 5
 
 exec "$@"
