@@ -4,7 +4,11 @@ files:
  - source: .
    destination: /home/ubuntu/yattblog
 hooks:
+  BeforeInstall:
+   - location: utils_shortcuts/clean_up
+     timeout: 100
+     runas: root
   AfterInstall:
-   - location: utils_shortcuts/docker_container_up
+   - location: utils_shortcuts/prepareVenv_and_up_docker
      timeout: 300
      runas: root
