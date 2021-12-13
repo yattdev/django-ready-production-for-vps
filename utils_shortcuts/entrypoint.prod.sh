@@ -12,12 +12,10 @@ then
 fi
 
 # Update database with migrate
-python manage.py migrate --noinput --traceback
-
+python manage.py migrate --noinput --traceback && \
+# Collectstatic files with collectstatic command
+python manage.py collectstatic --noinput --traceback && \
 # Run test with test
 python manage.py test --noinput --traceback
-
-# Collectstatic files with collectstatic command
-python manage.py collectstatic --noinput --traceback
 
 exec "$@"
