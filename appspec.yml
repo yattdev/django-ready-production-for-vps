@@ -9,7 +9,7 @@ hooks:
      timeout: 10
      runas: root
   AfterInstall:
-   - location: utils_shortcuts/clean_up_docker_none
+   # - location: utils_shortcuts/clean_up_docker_none
    - location: utils_shortcuts/prepareVenv_and_up_docker
      timeout: 300
      runas: root
