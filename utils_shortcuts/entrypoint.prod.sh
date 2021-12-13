@@ -15,6 +15,6 @@ fi
 python manage.py migrate --noinput --traceback
 
 # Run test with test
-python manage.py test --noinput --traceback
+# python manage.py test --noinput --traceback
 
 exec "$@"
