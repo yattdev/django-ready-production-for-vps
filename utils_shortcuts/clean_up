@@ -6,3 +6,9 @@ cd /home/ubuntu/
 # Delete previous projet directory
 # in BeforeInstall hooks, otherwise deployment fail if it exist
 rm -rf ./yattblog
+
+# clean up docker unused images
+docker image prune -af
+
+# clean up docker unused volumes
+docker volume prune -f
