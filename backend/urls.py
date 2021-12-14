@@ -27,7 +27,7 @@ from django.contrib.auth import views as auth_views
 schemas_view = get_schema_view(
     openapi.Info(
         title="RESTFULL API FOR PERSONNAL BLOG APPLICATION",
-        description="API BLOG APPLICATION MADE WITH\
+        description="API MADE WITH\
         DJANGO-POSTGRES-GUNICORN-NGINX-DOCKER",
         default_version="v1",
         terms_of_service="https://www.google.com/policies/terms/",
