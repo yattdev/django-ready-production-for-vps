@@ -11,7 +11,7 @@ services:
         volumes:
           - static_volume:/home/alassane/yattblog/staticfiles
           - media_volume:/home/alassane/yattblog/mediafiles
-          - .:/home/alassane/yattblog
+          # - .:/home/alassane/yattblog
         expose:
             - 8000
         depends_on:
@@ -57,7 +57,7 @@ services:
           dockerfile: ./Dockerfile.prod
         command: celery -A backend worker -l info
         volumes:
-          - .:/home/alassane/yattblog
+          # - .:/home/alassane/yattblog
         env_file:
             - ./.env_file/prod/.prod.celery.env # content env variable for databases and django
         depends_on:
