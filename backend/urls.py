@@ -31,7 +31,7 @@ schemas_view = get_schema_view(
         DJANGO-POSTGRES-GUNICORN-NGINX-DOCKER",
         default_version="v1",
         terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="yattdeveloper@gmail"),
+        contact=openapi.Contact(email="alassane@yatt.tech"),
         license=openapi.License(name="BSD License"),
     ),
     public=True,
