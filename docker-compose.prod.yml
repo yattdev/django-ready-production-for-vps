@@ -54,7 +54,7 @@ services:
         restart: always
         build:
           context: .
-          dockerfile: ./Dockerfile.celery.prod
+          dockerfile: ./Dockerfile.prod
         command: celery -A backend worker -l info
         volumes:
           - .:/home/alassane/yattblog
