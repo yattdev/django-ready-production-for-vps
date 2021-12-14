@@ -8,7 +8,7 @@ then
     echo "Waiting for postgres..."
 
     if ! nc -z $SQL_HOST $SQL_PORT; then
-        echo $CONTAINER_ALREADY_STARTED
+        echo "Delete file:" $CONTAINER_ALREADY_STARTED
         rm -f .CONTAINER_ALREADY_STARTED_PLACEHOLDER
     fi
     sleep 1
@@ -28,7 +28,7 @@ if [ ! -e $CONTAINER_ALREADY_STARTED ]; then
     python manage.py migrate --noinput --traceback && sleep 1
 
     # Run test with test
-    python manage.py test --noinput --traceback && sleep 1
+    # python manage.py test --noinput --traceback && sleep 1
 
     # Run collectstatic with collectstatic
     python manage.py collectstatic --noinput --traceback && sleep 1
