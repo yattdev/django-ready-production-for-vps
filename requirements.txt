@@ -6,7 +6,7 @@
 #
 
 -i https://pypi.org/simple
-amqp==5.0.6; python_version >= '3.6'
+amqp==5.0.7; python_version >= '3.6'
 asgiref==3.4.1; python_version >= '3.6'
 billiard==3.6.4.0
 celery==5.2.1
@@ -36,9 +36,9 @@ django-resized==0.3.11
 django-taggit==2.0.0
 django-templated-mail==1.1.1
 django-tinymce4-lite==1.8.0
-django==3.2.9
+django==3.2
 djangorestframework-simplejwt==4.8.0
-djangorestframework==3.12.4
+djangorestframework==3.13.0
 djoser==2.1.0
 drf-yasg==1.20.0
 factory-boy==3.2.1
