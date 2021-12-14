@@ -14,4 +14,4 @@ docker image prune -af
 docker volume prune -f
 
 # Clean up <none> image not remove after image build
-docker images | grep none | awk '{ print ; }' | xargs docker rmi -f
+# docker images | grep none | awk '{ print ; }' | xargs docker rmi -f
