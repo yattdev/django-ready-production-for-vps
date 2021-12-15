@@ -57,6 +57,7 @@ class Article(models.Model):
                                  on_delete=models.CASCADE,
                                  related_name='articles')
     title = models.CharField(max_length=250, null=False, blank=False)
+    sub_title = models.CharField(max_length=255, null=True, blank=True)
     slug = models.SlugField()
     author = models.ForeignKey(User,
                                on_delete=models.CASCADE,
