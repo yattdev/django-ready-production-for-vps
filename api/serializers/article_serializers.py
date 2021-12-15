@@ -15,6 +15,7 @@ class ArticleSerializer(serializers.ModelSerializer):
             'id',
             'category',
             'title',
+            'sub_title',
             'author',
             'image',
             'image_credit',
