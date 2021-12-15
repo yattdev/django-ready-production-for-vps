@@ -13,7 +13,13 @@ chown -R ubuntu:ubuntu /home/ubuntu/yattblog
 # If changed container w'll re-create
 # If nothing stuff w'll not do.
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d --remove-orphans && \
+    sleep 5 && \
     # clean up docker unused images
     docker image prune -af && \
     # clean up docker unused volumes
-    docker volume prune -f
+    docker volume prune -f && \
+    sleep 5 && \
+    # Run migrations
+    docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec web python manage.py migrate --noinput && \
+    # Run test
+    docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec web python manage.py test --noinput
