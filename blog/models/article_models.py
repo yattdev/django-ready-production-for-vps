@@ -1,21 +1,20 @@
 # Core Django imports.
 import uuid
-from django.utils.html import mark_safe
+
+from blog.models.category_models import Category
+# Blog application imports.
+from blog.utils.blog_utils import count_words, read_time
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.html import mark_safe
 from django.utils.text import slugify
-
+from django.utils.translation import ugettext_lazy as _
 # Third party app imports
 from taggit.managers import TaggableManager
-from ckeditor_uploader.fields import RichTextUploadingField
-
-# Blog application imports.
-from blog.utils.blog_utils import count_words, read_time
-from blog.models.category_models import Category
-from django.utils.translation import ugettext_lazy as _
-
 from taggit.models import GenericUUIDTaggedItemBase, TaggedItemBase
 
 # Get Custom User as User
@@ -56,7 +55,7 @@ class Article(models.Model):
     category = models.ForeignKey(Category,
                                  on_delete=models.CASCADE,
                                  related_name='articles')
-    title = models.CharField(max_length=250, null=False, blank=False)
+    title = models.CharField(max_length=120, null=False, blank=False)
     sub_title = models.CharField(max_length=255, null=True, blank=True)
     slug = models.SlugField()
     author = models.ForeignKey(User,
@@ -105,3 +104,14 @@ class Article(models.Model):
                            'username': self.author.username.lower(),
                            'slug': self.slug
                        })
+
+    def clean(self):
+        if len(self.title) > 119:
+            # Validation for title field
+            raise ValidationError(
+                f"Error field Title: Max length is {self.title}")
+
+        if len(self.sub_title) > 254:
+            # Validation for sub_title field
+            raise ValidationError(
+                f"Error field Title: Max length is {self.sub_title}")
