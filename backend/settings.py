@@ -135,11 +135,12 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
+# Store this str to v_, because it is too long
+v_ = 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'
+
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME':
-        'django.contrib.auth.password_validation.\
-        UserAttributeSimilarityValidator',
+        'NAME': v_
     },
     {
         'NAME':
