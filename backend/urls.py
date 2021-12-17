@@ -39,7 +39,7 @@ schemas_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin241997/', admin.site.urls),
     path('blog', include('blog.urls')),
     path('api/v1/', include('api.urls')),
     # swagger logout url
