@@ -55,7 +55,7 @@ RUN usermod -aG root alassane
 
 # Set work directory
 ENV HOME=/home/alassane
-ENV APP_HOME=/home/alassane/yattblog
+ENV APP_HOME=/home/alassane/local_test
 WORKDIR $APP_HOME
 
 # Add path
@@ -95,4 +95,4 @@ RUN apt-get autoremove
 USER alassane
 
 # run entrypoint.prod.sh
-ENTRYPOINT ["/home/alassane/yattblog/utils_shortcuts/entrypoint.prod.sh"]
+ENTRYPOINT ["/home/alassane/local_test/utils_shortcuts/entrypoint.prod.sh"]
