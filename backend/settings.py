@@ -50,14 +50,6 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 # Application definition
 
-BLOG_APP_DEPS = [
-    'django_filters',
-    'taggit',
-    'ckeditor',
-    'ckeditor_uploader',
-    'crispy_forms',
-]
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -76,8 +68,7 @@ INSTALLED_APPS = [
     # local
     'api',  # endpoint app
     'users',  # app to manage users
-    'blog'
-] + BLOG_APP_DEPS
+]
 
 AUTH_USER_MODEL = 'users.UserAccount'
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
