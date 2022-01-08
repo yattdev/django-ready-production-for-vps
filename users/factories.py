@@ -4,7 +4,6 @@
 import factory
 from faker import Faker
 from django.contrib.auth import get_user_model
-from blog import signals
 
 # Create object faker
 fake = Faker()
@@ -13,7 +12,8 @@ fake = Faker()
 User = get_user_model()
 
 
-@factory.django.mute_signals(signals.post_save)  # Mute profile create signals
+# Mute profile create signals
+#  @factory.django.mute_signals(signals.post_save)
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = User
