@@ -1,13 +1,12 @@
 version: '3.8'
 
 services:
-    web:
-        container_name: yattblog_django
+    web_student:
         depends_on:
-          - db
-    db:
+          - db_student
+    db_student:
         image: postgres:12-alpine
-        container_name: yattblog_db
+
     redis:
         image: redis:alpine
         ports:
