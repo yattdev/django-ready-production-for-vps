@@ -11,7 +11,7 @@ Class-based views
     2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
 Including another URLconf
     1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+    2. Add a URL to urlpatterns:  path('users/', include('users.urls'))
 """
 from django.contrib import admin
 from django.urls import path, include
@@ -39,14 +39,13 @@ schemas_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('admin241997/', admin.site.urls),
-    path('blog', include('blog.urls')),
+    path('admin-web-students/', admin.site.urls),
     path('api/v1/', include('api.urls')),
     # swagger logout url
     path('accounts/logout/',
-         RedirectView.as_view(url=reverse_lazy('blog:logout'))),
+         RedirectView.as_view(url=reverse_lazy('users:logout'))),
     path('accounts/login/',
-         RedirectView.as_view(url=reverse_lazy('blog:login'))),
+         RedirectView.as_view(url=reverse_lazy('users:login'))),
     path('', RedirectView.as_view(url=reverse_lazy('openapi-schemas'))),
     path('api/v1/docs/',
          schemas_view.with_ui('swagger', cache_timeout=0),
